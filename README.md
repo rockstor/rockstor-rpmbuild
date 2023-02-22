@@ -106,7 +106,7 @@ and places it in the .venv subdirectory of /opt/%{name}
 
 ### RPM will not be signed.
 
-All official Rockstor packages, and their host repositories, are singed by the project.
+All official Rockstor packages, and their host repositories, are signed by the project.
 As such a hand/custom-built package will have no signature.
 Options:
 1) The fix is to sign you rpm.
