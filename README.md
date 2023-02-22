@@ -125,7 +125,7 @@ But this is not a priority for the project.
 
 ### Package renaming
 
-There is facility within the rpmbuild spec file to rename the resulting package.
+There is a facility within the rpmbuild spec file to rename the resulting package.
 This, as per RPM relocation above, is also only partially implemented across our repositories.
 And would entail far more work to implement than the relocation capability.
 Again this is not a priority for the project.
