@@ -80,7 +80,7 @@ See: [pre-install gzip to avoid busybox-gzip via dependency](https://github.com/
 
 ## Build the RPM/SRPM
 
-Both the regular RPM, and it's source variant (SRPM) can be build with a single command.
+Both the regular RPM, and its source variant (SRPM) can be build with a single command.
 
 ```shell
 # Current dir must be that of the spec file:
