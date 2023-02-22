@@ -31,7 +31,7 @@ This helps with establishing if any new dependencies are required when making sp
 The rpmbuild process, within the %check scriptlet, also runs all our existing unit tests.
 As such a properly configured and running Postgres server is required.
 The prior installs rockstor-pre.service (initrock) would have asserted these conditions.
-Other-wise the rpmbuild command will fail on the %check scriptlet stage. 
+Otherwise the rpmbuild command will fail on the %check scriptlet stage.
 
 ### Remove the exising package
 
