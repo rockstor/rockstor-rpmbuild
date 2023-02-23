@@ -27,7 +27,7 @@ and specifically the [Installation]() subsection for how to install a Rockstor i
 The rest of this guide assumes such an instance is in use, and has been fully updated.
 
 Using an existing Rockstor install ensures that at least our prior dependencies are in place.
-This helps with establishing any new dependency requirements when making spec file changes.
+This helps with establishing if any new dependencies are required when making spec file changes.
 The rpmbuild process, within the %check scriptlet, also runs all our existing unit tests.
 As such a properly configured and running Postgres server is required.
 The prior installs rockstor-pre.service (initrock) would have asserted these conditions.
