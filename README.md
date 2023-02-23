@@ -26,14 +26,14 @@ See our [Regular documentation](https://rockstor.com/docs/) for general infomati
 and specifically the [Installation]() subsection for how to install a Rockstor instance.
 The rest of this guide assumes such an instance is in use, and has been fully updated.
 
-Using an existing Rockstor install ensures that at least our prior dependencies are in-place.
+Using an existing Rockstor install ensures that at least our prior dependencies are in place.
 This helps with establishing if any new dependencies are required when making spec file changes.
 The rpmbuild process, within the %check scriptlet, also runs all our existing unit tests.
 As such a properly configured and running Postgres server is required.
 The prior installs rockstor-pre.service (initrock) would have asserted these conditions.
 Otherwise the rpmbuild command will fail on the %check scriptlet stage.
 
-### Remove the exising package
+### Remove the existing package
 
 See: [Remove the Existing Rockstor RPM install](https://rockstor.com/docs/contribute/contribute.html#remove-the-existing-rockstor-rpm-install)
 
@@ -100,7 +100,7 @@ on the intended/target architecture.
 Their contents, for now at least, are not actually architecture specific.
 But when installed, the resulting RPMs' Poetry build orchestrator,
 links/downloads and/or builds what is found to be required,
-and places it in the .venv subdirectory of /opt/%{name}
+and places it in the `.venv` subdirectory of `/opt/%{name}`.
 
 ## Caveats
 
