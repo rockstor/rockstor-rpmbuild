@@ -394,6 +394,11 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Mon Mar 06 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.7-2511
+-drop qgroupid in share create when quotas are disabled #2506 @Hooverdan96 @phillxnet
+-Convert share ID during snapshot task restore #2355 @FroggyFlox
+-Improve 'Maintenance required' advice #2394 @phillxnet
+-Remove raid0 dev restriction & tidy pool dev fencing code #2385 @phillxnet
 * Fri Feb 17 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.7-0
 -Bump versions to a 4.5.7 base (RC4) #2496 @phillxnet
 -Improve README.md re package licensing, project goals etc #2489 @phillxnet
