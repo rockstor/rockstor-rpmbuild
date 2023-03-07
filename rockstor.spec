@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 4.5.7
+Version: 4.5.8
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 4.5.7
+%define jslibs_version 4.5.8
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -394,7 +394,10 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
-* Mon Mar 06 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.7-2511
+* Tue Mar 07 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.8-0
+-Bump versions to a 4.5.8 base (RC5) #2510 @phillxnet
+-Convert pool ID in backup file to the one in the database #2508 @FroggyFlox
+-alt arch causing false positive update available #2468 @phillxnet
 -drop qgroupid in share create when quotas are disabled #2506 @Hooverdan96 @phillxnet
 -Convert share ID during snapshot task restore #2355 @FroggyFlox
 -Improve 'Maintenance required' advice #2394 @phillxnet
