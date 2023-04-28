@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 4.5.8
+Version: 4.5.9
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 4.5.8
+%define jslibs_version 4.5.9
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -394,6 +394,15 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri Apr 28 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.9-0
+-Bump versions to a 4.5.9 base (RC6) #2541 @phillxnet
+-Replace 'SHOP' with 'OPEN COLLECTIVE' in header menu #2538 @phillxnet
+-Enhance Pool size calculation re new raid levels #2525 @phillxnet
+-[Active Directory] Failure to set an AD user as Samba admin_user until Rockstor service restart #2526 @FroggyFlox
+-RockOn Installation: the environment form has no scrollbar when there are many vars defined #2533 @kanecko
+-Add mixed raid levels #2520 @phillxnet
+-improve behaviour on missing /dev/disk/by-id directory #2401 @phillxnet
+-Scheduled tasks of type "Reboot" fail to run #2514 @FroggyFlox
 * Tue Mar 07 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.8-0
 -Bump versions to a 4.5.8 base (RC5) #2510 @phillxnet
 -Convert pool ID in backup file to the one in the database #2508 @FroggyFlox
