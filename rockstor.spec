@@ -1,6 +1,6 @@
 Name: rockstor
 Version: 4.5.9
-Release: 0
+Release: 1
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
@@ -394,7 +394,8 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
-* Fri Apr 28 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.9-0
+* Sat Apr 29 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.9-1
+-Update indirect greenlet dependency to latest version #2543 @phillxnet
 -Bump versions to a 4.5.9 base (RC6) #2541 @phillxnet
 -Replace 'SHOP' with 'OPEN COLLECTIVE' in header menu #2538 @phillxnet
 -Enhance Pool size calculation re new raid levels #2525 @phillxnet
