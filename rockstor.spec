@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 4.5.9
-Release: 1
+Version: 4.6.0
+Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 4.5.9
+%define jslibs_version 4.6.0
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -394,6 +394,16 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Tue May 30 2023 Philip Guyton <philip@yewtreeapps.com> - 4.6.0-0
+-Merge testing branch into master #2529 @phillxnet
+-Bump versions to a 4.6.0 base (RC7) #2561 @phillxnet
+-Allow delete of un-mounted/un-mountable pool #2395 @phillxnet
+-Improve permissions on crontabs created by rockstor #2556 @FroggyFlox
+-migrate hard wired config paths re poetry build #2540 @FroggyFlox
+-Account for Tumbleweed sshd config changes #2501 @phillxnet @Hooverdan96 @FroggyFlox
+-Cleanup json2.js reference #2550 @Hooverdan96
+-Make rockon-delete compatible with duplicate RockOn model entries #2549 @FroggyFlox @Hooverdan96
+-use cryptsetup to retrieve container uuid #2545 @phillxnet
 * Sat Apr 29 2023 Philip Guyton <philip@yewtreeapps.com> - 4.5.9-1
 -Update indirect greenlet dependency to latest version #2543 @phillxnet
 -Bump versions to a 4.5.9 base (RC6) #2541 @phillxnet
