@@ -1,0 +1,80 @@
+name: Update spec file
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: version without release
+        type: string
+      release:
+        required: true
+        description: release
+        type: string
+      target_branch:
+        required: true
+        description: name of the branch to use
+        type: string
+jobs:
+  update-spec-file:
+    name: Update Rockstor spec file
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout rockstor/rockstor-rpmbuild
+        id: checkout-rpmbuild
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.target_branch }}
+          sparse-checkout: |
+            rockstor.spec
+          sparse-checkout-cone-mode: false
+      - name: Create new branch
+        id: create-branch
+        run: |
+          git checkout -b ${{ inputs.version }}-${{ inputs.release }}_release
+      - name: Set timestamp variable
+        id: set_timestamp-var
+        run: |
+          echo 'TIMESTAMP='$(date +'%a %b %d %Y') >> $GITHUB_ENV
+      - name: Get release notes
+        id: get-relnotes
+        run: |
+          gh release view ${{ inputs.version }}-${{ inputs.release }} \
+          -R rockstor/rockstor-core --json body --template '{{ .body }}{{"\n"}}' | \
+          grep '^\* ' | \
+          sed 's|in https://github.com/rockstor/rockstor-core/pull/[0-9]*||g' | \
+          sed 's|by @|@|g' | \
+          sed 's|* |-|g' | \
+          tac > release_notes.txt
+      - name: edit spec file
+        id: edit-spec-file
+        run: |
+          sed -i "s/Version: .*/Version: ${{ inputs.version }}/g" rockstor.spec
+          sed -i "s/Release: .*/Release: ${{ inputs.release }}/g" rockstor.spec
+          sed -i "s/%define jslibs_version .*/%define jslibs_version ${{ inputs.version }}/g" rockstor.spec
+          echo "* $TIMESTAMP ${{ vars.RPM_AUTHOR }} <${{ vars.RPM_EMAIL }}> - ${{ inputs.version }}-${{ inputs.release }}" | \
+          cat - release_notes.txt > changelog_snippet.txt
+          cat changelog_snippet.txt
+          sed -i '/%changelog/r changelog_snippet.txt' rockstor.spec
+      - name: Commit changes
+        id: commit-changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rockstor.spec
+          git commit -m "Update rockstor.spec for ${{ inputs.version }}-${{ inputs.release }} release"
+      - name: Push changes
+        id: push-changes
+        run: |
+          git push -u origin ${{ inputs.version }}-${{ inputs.release }}_release
+      - name: Create a pull request
+        id: create-pull-request
+        run: |
+          gh pr create \
+          --base ${{ inputs.target_branch }} \
+          --title "${{ inputs.version }}-${{ inputs.release }} Version-Release plus Changelog update" \
+          --body "Automated pull request for the ${{ inputs.version }}-${{ inputs.release }} Version-Release"
