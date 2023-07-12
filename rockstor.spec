@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 4.6.0
+Version: 4.6.1
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 4.6.0
+%define jslibs_version 4.6.1
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -394,6 +394,12 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Wed Jul 12 2023 The Rockstor Project <support@rockstor.com> - 4.6.1-0
+-Bump versions to a 4.6.1 base (Stable) - master branch #2615 @phillxnet 
+-Update unit tests re recent SSL Cert update changes #2613 @phillxnet 
+-SSL Certificate update doesn't reload nginx #2566 @phillxnet 
+-Revise Stable Updates activation re legacy shop removal #2599 @phillxnet 
+-Add GitHub Action to trigger post-release updates across repositories #2596 @FroggyFlox 
 * Tue May 30 2023 Philip Guyton <philip@yewtreeapps.com> - 4.6.0-0
 -Merge testing branch into master #2529 @phillxnet
 -Bump versions to a 4.6.0 base (RC7) #2561 @phillxnet
