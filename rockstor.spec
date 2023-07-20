@@ -35,7 +35,7 @@ Prefix: /opt
 # which is in-turn exported as a shell variable of RPM_BUILD_ROOT
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-build
 
-BuildRequires: python2
+BuildRequires: python3
 BuildRequires: systemd
 BuildRequires: systemd-rpm-macros
 # For when we update to current poetry for our build (Python 3 only):
@@ -53,8 +53,8 @@ BuildRequires: systemd-rpm-macros
 
 # openSUSE Leap 15.0/15.1/15.2/15.3/15.4
 %if 0%{?suse_version} == 1500
-Requires: python
-Requires: python-devel
+Requires: python3
+Requires: python3-devel
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -86,7 +86,6 @@ Requires: nut-drivers-net
 Requires: net-snmp
 Requires: docker
 Requires: cryptsetup
-Requires: python3-distro
 Requires: dnf-yum
 Requires: dnf-plugins-core
 Requires: python3-python-dateutil
@@ -94,7 +93,6 @@ Requires: which
 Requires: shellinabox
 Requires: avahi
 Requires: cronie
-Requires: python-xml
 Requires: sssd
 Requires: sssd-tools
 Requires: sssd-ad
@@ -114,8 +112,9 @@ Requires: make
 # Tumbleweed as of Nov 2022:
 # Version unreliable as changes over time !
 %if 0%{?suse_version} >= 1599
-Requires: python
-Requires: python-devel
+# Nearest Python 3 in TW to our interim Py3.6 target is 3.8:
+Requires: python38
+Requires: python38-devel
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -147,7 +146,6 @@ Requires: nut-drivers-net
 Requires: net-snmp
 Requires: docker
 Requires: cryptsetup
-Requires: python3-distro
 Requires: dnf-yum
 Requires: dnf-plugins-core
 Requires: python3-python-dateutil
@@ -155,7 +153,6 @@ Requires: which
 Requires: shellinabox
 Requires: avahi
 Requires: cronie
-Requires: python-xml
 Requires: sssd
 Requires: sssd-tools
 Requires: sssd-ad
