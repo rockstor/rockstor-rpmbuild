@@ -93,7 +93,6 @@ Requires: which
 Requires: shellinabox
 Requires: avahi
 Requires: cronie
-Requires: python-xml
 Requires: sssd
 Requires: sssd-tools
 Requires: sssd-ad
@@ -154,7 +153,6 @@ Requires: which
 Requires: shellinabox
 Requires: avahi
 Requires: cronie
-Requires: python-xml
 Requires: sssd
 Requires: sssd-tools
 Requires: sssd-ad
