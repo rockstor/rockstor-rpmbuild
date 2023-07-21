@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 4.6.0
+Version: 5.0.0
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 4.6.0
+%define jslibs_version 5.0.0
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -391,6 +391,26 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri Jul 21 2023 The Rockstor Project <support@rockstor.com> - 5.0.0-0
+-WARNING -- RENEWED TESTING PHASE 5.0.0-0 -- (DEVELOPERS ONLY) #2610 @phillxnet 
+-Update specifics of Python version in pyproject.toml etc #2620 @phillxnet 
+-Update unit tests re recent SSL Cert update changes #2611 @phillxnet 
+-update use of python distro module re 1.7.0+ changes #2426 @phillxnet 
+-Disposition of pytz package #2590 @phillxnet 
+-SSL Certificate update doesn't reload nginx #2606 @phillxnet 
+-Testing counterpart Revise Stable Updates activation re legacy shop removal #2603 @phillxnet 
+-Add GitHub Action to trigger post-release updates across repositories #2600  @FroggyFlox 
+-Restore config backup functionality #2569 @FroggyFlox 
+-Py3.6 Update certifi, urllib3, idna #2588 @phillxnet 
+-Restore Logs Manager - Logs Readers functions #2568 @FroggyFlox 
+-Py3.6 Scheduled tasks import paths fix, snapshot & scub #2570 @phillxnet 
+-Py3.6 test_user.py fail re string interpretation #2582 @phillxnet 
+-Save network usage processed data as List object #2577 @FroggyFlox 
+-Py3.6 test_shares.py & test_snapshot.py re boolean type #2580 @phillxnet 
+-Py3.6 ModuleNotFoundError: 'crontabwindow', 'nfsd_calls' - tests #2578 @phillxnet 
+-Py3.6 ModuleNotFoundError: No module named 'mock' - tests #2575 @phillxnet 
+-Py3.6 update test_btrfs.py and use built-in mock #2571 @phillxnet 
+-Preliminary python 3.6 port - development #2564 @phillxnet 
 * Tue May 30 2023 Philip Guyton <philip@yewtreeapps.com> - 4.6.0-0
 -Merge testing branch into master #2529 @phillxnet
 -Bump versions to a 4.6.0 base (RC7) #2561 @phillxnet
