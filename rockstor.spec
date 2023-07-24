@@ -323,6 +323,8 @@ if [ "$1" = "2" ]; then  # update
     rm -rf %{prefix}/%{name}/jslibs
     # Remove collectstatic generated static dir as build.sh (posttrans) will regenerate.
     rm -rf %{prefix}/%{name}/static
+    # Remove our prior versions .venv dir as build.sh (posttrans) will regenerate.
+    rm -rf %{prefix}/%{name}/.venv
 fi
 %service_add_post rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
@@ -334,10 +336,6 @@ exit 0
 #
 %service_del_preun rockstor-pre.service rockstor.service rockstor-bootstrap.service
 #
-if [ "$1" = "0" ]; then  # update
-    # Remove our prior versions .venv.
-    rm -rf %{prefix}/%{name}/.venv
-fi
 exit 0
 
 %postun
