@@ -334,7 +334,7 @@ exit 0
 #
 %service_del_preun rockstor-pre.service rockstor.service rockstor-bootstrap.service
 #
-if [ "$1" = "1" ]; then  # update
+if [ "$1" = "0" ]; then  # update
     # Remove our prior versions .venv.
     rm -rf %{prefix}/%{name}/.venv
 fi
