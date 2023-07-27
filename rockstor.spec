@@ -326,6 +326,10 @@ if [ "$1" = "2" ]; then  # update
     # Remove our prior versions .venv dir as build.sh (posttrans) will regenerate.
     rm -rf %{prefix}/%{name}/.venv
 fi
+# Enforce, via manual alternatives configuration, our target postgresql version.
+# We do this on install & update to avoid base OS defaults exceeding our compatibility.
+# Compatibility concern primarily Django's secondary dependency of psycopg2 which we pin.
+update-alternatives --set postgresql /usr/lib/postgresql13
 # enable/disable our units by default on package installation,
 # enforcing distribution, spin or administrator preset policy.
 # See: https://build.opensuse.org/package/show/home:rockstor:branches:Base:System/systemd-presets-branding-rockstor
