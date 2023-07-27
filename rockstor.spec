@@ -326,6 +326,9 @@ if [ "$1" = "2" ]; then  # update
     # Remove our prior versions .venv dir as build.sh (posttrans) will regenerate.
     rm -rf %{prefix}/%{name}/.venv
 fi
+# enable/disable our units by default on package installation,
+# enforcing distribution, spin or administrator preset policy.
+# See: https://build.opensuse.org/package/show/home:rockstor:branches:Base:System/systemd-presets-branding-rockstor
 %service_add_post rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
@@ -334,6 +337,7 @@ exit 0
 # $1 == 0 is before an uninstall
 # $1 == 1 is before an update
 #
+# If uninstall, the following service macro disables and stops our services.
 %service_del_preun rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
@@ -344,6 +348,7 @@ exit 0
 #
 # During package update, % service_del_postun restarts units.
 # If units are not to be restarted, % service_del_postun_without_restart should be used instead.
+# The following service macro deletes our services, then does a 'systemctl daemon-reload'
 %service_del_postun_without_restart rockstor-pre.service rockstor.service rockstor-bootstrap.service
 # We need to restart the nginx service as we removed our nginx override file.
 if [ "$1" = "0" ]; then  # uninstall so clean up build.sh generated files and other dynamic files.
@@ -369,13 +374,13 @@ exit 0
 
 %posttrans
 # From: https://en.opensuse.org/openSUSE:Packaging_scriptlet_snippets
-# the posttrans scriptlet is available form rpm version 4.4 onwards.
+# the posttrans scriptlet is available from rpm version 4.4 onwards.
 #
 # Last scriptlet to execute from old or new package versions.
 # Executed from new package version during install & upgrade similarly.
 #
 # Run build.sh
-# 1. Install poerty to system.
+# 1. Install Poetry to system.
 # 2. Use it to populate/refresh .venv.
 # 3. if no jslibs dir exists:
 #        un-tar rockstor-jslibs.tar.gz
