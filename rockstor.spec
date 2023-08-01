@@ -35,9 +35,18 @@ Prefix: /opt
 # which is in-turn exported as a shell variable of RPM_BUILD_ROOT
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-build
 
-BuildRequires: python3
+# Generic build requirements: % check requires a Poetry built venv.
 BuildRequires: systemd
 BuildRequires: systemd-rpm-macros
+BuildRequires: git
+BuildRequires: dbus-1-devel
+BuildRequires: glib2-devel
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: make
+BuildRequires: postgresql13
+BuildRequires: postgresql13-server
+BuildRequires: postgresql13-server-devel
 # For when we update to current poetry for our build (Python 3 only):
 # https://en.opensuse.org/openSUSE:Build_system_recipes#PEP517_style:
 # https://github.com/openSUSE/python-rpm-macros/blob/79041e9986dd5427d0bc1f66936092ddfe04533b/README.md#install-macros
@@ -51,8 +60,10 @@ BuildRequires: systemd-rpm-macros
 # "suse_version 1500 for the full time life of SLE15 and openSUSE:Leap:15.x"
 # https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto
 
-# openSUSE Leap 15.0/15.1/15.2/15.3/15.4
+# openSUSE Leap 15.0/15.1/15.2/15.3/15.4/15.5
 %if 0%{?suse_version} == 1500
+BuildRequires: python3
+BuildRequires: python3-devel
 Requires: python3
 Requires: python3-devel
 Requires: NetworkManager
@@ -113,6 +124,8 @@ Requires: make
 # Version unreliable as changes over time !
 %if 0%{?suse_version} >= 1599
 # Nearest Python 3 in TW to our interim Py3.6 target is 3.8:
+BuildRequires: python38
+BuildRequires: python38-devel
 Requires: python38
 Requires: python38-devel
 Requires: NetworkManager
