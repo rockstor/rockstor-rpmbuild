@@ -416,7 +416,6 @@ exit 0
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
 * Wed Aug 02 2023 The Rockstor Project <support@rockstor.com> - 5.0.2-0
--@StephenBrown2 made their first contribution 
 -resolve indeterminate or inappropriate postgresql alternative conf #2632 @phillxnet 
 -Add option for ZSTD compression #2618 @StephenBrown2 
 -Improve OS independence re unit tests #2633 @phillxnet 
