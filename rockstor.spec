@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.1
+Version: 5.0.2
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.1
+%define jslibs_version 5.0.2
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -415,6 +415,11 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Wed Aug 02 2023 The Rockstor Project <support@rockstor.com> - 5.0.2-0
+-resolve indeterminate or inappropriate postgresql alternative conf #2632 @phillxnet 
+-Add option for ZSTD compression #2618 @StephenBrown2 
+-Improve OS independence re unit tests #2633 @phillxnet 
+-user admin enable without password change not internal error #2635 @phillxnet 
 * Mon Jul 24 2023 The Rockstor Project <support@rockstor.com> - 5.0.1-0
 -venv not updating re python version change #2626 @phillxnet 
 -(t) Failure to check for updates in locales other than en_US #2627 @phillxnet 
