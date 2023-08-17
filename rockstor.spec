@@ -297,8 +297,10 @@ poetry run django-admin test
 
 
 # N.B. Package update runs
-#-
-#- %pretrans of new version
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/Scriptlets/#ordering
+# view installed package scriptlets via: "rpm -q --scripts rockstor"
+#
+#- %pretrans of new version (Lua only)
 #- %pre of new version
 # New package installed.
 #- %post of new version
@@ -309,17 +311,21 @@ poetry run django-admin test
 #- %posttrans of new package
 
 %pre
-# Before install/update
+# Before install/update (run from new/incoming package version)
 # $1 == 1 is before an install
 # $1 == 2 is before an update
 #
+# Stop all main rockstor services, irrespective of origin.
+/usr/bin/systemctl stop rockstor-bootstrap.service rockstor.service rockstor-pre.service
+# remove all pyc files (Python interpreter generated)
+find %{prefix}/%{name}/src -name '*.pyc' -delete
 # Before we install, remove non-packaged rockstor legacy/development files:
 rm --force /etc/systemd/system/rockstor*
 systemctl daemon-reload
 # remove legacy bin develop-eggs & eggs directories
-rm --force %{prefix}/%{name}/bin
-rm --force %{prefix}/%{name}/develop-eggs
-rm --force %{prefix}/%{name}/eggs
+rm --force --recursive %{prefix}/%{name}/bin
+rm --force --recursive %{prefix}/%{name}/develop-eggs
+rm --force --recursive %{prefix}/%{name}/eggs
 # https://en.opensuse.org/openSUSE:Systemd_packaging_guidelines#Unit_files
 # See: /usr/lib/rpm/macros.d/macros.systemd from systemd-rpm-macros
 # rpm --eval macro-name-here
@@ -327,7 +333,7 @@ rm --force %{prefix}/%{name}/eggs
 exit 0
 
 %post
-# After install/update
+# After install/update (run from new/incoming package version)
 # $1 == 1 is after an install
 # $1 == 2 is after an update
 #
@@ -350,7 +356,7 @@ update-alternatives --set postgresql /usr/lib/postgresql13
 exit 0
 
 %preun
-# Before uninstall/update
+# Before uninstall/update (run from old/outgoing package version)
 # $1 == 0 is before an uninstall
 # $1 == 1 is before an update
 #
@@ -359,15 +365,17 @@ exit 0
 exit 0
 
 %postun
-#After uninstall/update
+# After uninstall/update (run from old/outgoing package version)
 # $1 == 0 is after an uninstall
 # $1 == 1 is after an update
 #
 # During package update, % service_del_postun restarts units.
-# If units are not to be restarted, % service_del_postun_without_restart should be used instead.
-# The following service macro deletes our services, then does a 'systemctl daemon-reload'
+
+# If units are not to be restarted, use % service_del_postun_without_restart
+# On uninstall the following service macro deletes our services, then does a 'systemctl daemon-reload'
 %service_del_postun_without_restart rockstor-pre.service rockstor.service rockstor-bootstrap.service
-# We need to restart the nginx service as we removed our nginx override file.
+
+# Post uninstall we need to restart the nginx service as we removed our nginx override file.
 if [ "$1" = "0" ]; then  # uninstall so clean up build.sh generated files and other dynamic files.
     systemctl restart nginx
     # Remove jslibs directory from rockstor-jslibs.tar.gz
