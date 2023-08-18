@@ -317,6 +317,17 @@ poetry run django-admin test
 #
 # Stop all main rockstor services, irrespective of origin.
 /usr/bin/systemctl stop rockstor-bootstrap.service rockstor.service rockstor-pre.service
+#
+# Backup all static/config-backups contents; to be restored in posttrans scriptlet.
+if [ -d "%{prefix}/%{name}/static/config-backups" ]
+then
+    echo "Copying contents of static/config-backups to config-backups-rpmsave."
+    [ ! -d "%{prefix}/%{name}/config-backups-rpmsave" ] && mkdir %{prefix}/%{name}/config-backups-rpmsave
+    cp --preserve=all %{prefix}/%{name}/static/config-backups/* %{prefix}/%{name}/config-backups-rpmsave
+else
+    echo "No static/config-backups directory found."
+fi
+#
 # remove all pyc files (Python interpreter generated)
 find %{prefix}/%{name}/src -name '*.pyc' -delete
 # Before we install, remove non-packaged rockstor legacy/development files:
@@ -416,6 +427,16 @@ PATH="$HOME/.local/bin:$PATH"
 export LANG=C.UTF-8
 cd %{prefix}/%{name}
 ./build.sh
+#
+# Restore 'pre' scriptlet's config-backup-rpmsave files to static.
+if [ -d "%{prefix}/%{name}/config-backups-rpmsave" ]
+then
+    echo "Restoring config-backups-rpmsave contents to static/config-backups."
+    [ ! -d "%{prefix}/%{name}/static/config-backups" ] && mkdir %{prefix}/%{name}/static/config-backups
+    cp --preserve=all %{prefix}/%{name}/config-backups-rpmsave/* %{prefix}/%{name}/static/config-backups
+else
+    echo "No config-backups-rpmsave directory found."
+fi
 exit 0
 
 
