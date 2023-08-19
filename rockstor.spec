@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.2
+Version: 5.0.3
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.2
+%define jslibs_version 5.0.3
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -444,6 +444,16 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Sat Aug 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.3-0
+-Save and Restore config back-up files during rpm update #2660 @Hooverdan96 @phillxnet @FroggyFlox 
+-(t) Update django-pipeline to 1.7.0 #2646 @FroggyFlox 
+-Improve rockstor.service re robustness #2657 @phillxnet 
+-Improve Web-UI update re systemd service management #2651 @phillxnet 
+-Enhance development ease #2653 @phillxnet 
+-Web-UI update fails to recreate venv #2652 @FroggyFlox @phillxnet 
+-Establish on_delete for ForeignKey re Django update #2645 @phillxnet 
+-Address compression cosmetics #2640 @StephenBrown2 
+-Update .gitignore with Rockstor build artifacts #2644 @StephenBrown2 
 * Wed Aug 02 2023 The Rockstor Project <support@rockstor.com> - 5.0.2-0
 -resolve indeterminate or inappropriate postgresql alternative conf #2632 @phillxnet 
 -Add option for ZSTD compression #2618 @StephenBrown2 
