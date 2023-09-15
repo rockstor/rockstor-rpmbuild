@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.3
+Version: 5.0.4
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.3
+%define jslibs_version 5.0.4
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -444,6 +444,14 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri Sep 15 2023 The Rockstor Project <support@rockstor.com> - 5.0.4-0
+-Bump versions to a 5.0.4 base (Testing) - testing branch #2675 @phillxnet 
+-Catch DBusException to not throw error on LDAP group lookup #2673 @FroggyFlox 
+-Explicitly set REALM when querying workgroup #2671 @FroggyFlox 
+-surface Distro Version to breadcrumb bar #2668 @Hooverdan96 
+-Set `Meta.base_manager_name` on 'storageadmin.Disk' #2666 @FroggyFlox 
+-Use user.is_authenticated as an attribute #2664 @FroggyFlox 
+-Migrate to New Middleware style #2662 @FroggyFlox 
 * Sat Aug 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.3-0
 -Save and Restore config back-up files during rpm update #2660 @Hooverdan96 @phillxnet @FroggyFlox 
 -(t) Update django-pipeline to 1.7.0 #2646 @FroggyFlox 
