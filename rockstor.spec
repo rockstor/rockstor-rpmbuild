@@ -62,10 +62,10 @@ BuildRequires: postgresql13-server-devel
 
 # openSUSE Leap 15.0/15.1/15.2/15.3/15.4/15.5
 %if 0%{?suse_version} == 1500
-BuildRequires: python3
-BuildRequires: python3-devel
-Requires: python3
-Requires: python3-devel
+BuildRequires: python39
+BuildRequires: python39-devel
+Requires: python39
+Requires: python39-devel
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -124,10 +124,10 @@ Requires: make
 # Version unreliable as changes over time !
 %if 0%{?suse_version} >= 1599
 # Nearest Python 3 in TW to our interim Py3.6 target is 3.8:
-BuildRequires: python38
-BuildRequires: python38-devel
-Requires: python38
-Requires: python38-devel
+BuildRequires: python39
+BuildRequires: python39-devel
+Requires: python39
+Requires: python39-devel
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
