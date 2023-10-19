@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.4
+Version: 5.0.5
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.4
+%define jslibs_version 5.0.5
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -444,6 +444,20 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Thu Oct 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.5-0
+-Bump versions to a 5.0.5 base (Testing) - testing branch #2715 @phillxnet 
+-Implement Tailscale service #2679 @FroggyFlox 
+-remove django-braces dependency #2709 @phillxnet 
+-Use single https session to retrieve all rock-on definitions #2707 @phillxnet 
+-Update gunicorn to latest - use gthread - discrete config file #2702 @phillxnet 
+-Update Requests library to latest #2704 @phillxnet 
+-Update python-socketio & python-engineio to latest #2591 @phillxnet @Hooverdan96 
+-Update Django REST Framework within Django version constraint #2695 @phillxnet 
+-Update django-pipeline to latest #2689 @phillxnet 
+-Update Python dependency to 3.9 #2691 @phillxnet 
+-Provisional Django 2.2 LTS update #2625 @phillxnet 
+-Add PyCharm rock-tests run config #2686 @phillxnet 
+-Don't throw exception when getting supervisord service status #2681 @FroggyFlox 
 * Fri Sep 15 2023 The Rockstor Project <support@rockstor.com> - 5.0.4-0
 -Bump versions to a 5.0.4 base (Testing) - testing branch #2675 @phillxnet 
 -Catch DBusException to not throw error on LDAP group lookup #2673 @FroggyFlox 
