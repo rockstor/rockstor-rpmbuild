@@ -47,7 +47,7 @@ BuildRequires: make
 BuildRequires: postgresql13
 BuildRequires: postgresql13-server
 BuildRequires: postgresql13-server-devel
-# For when we update to current poetry for our build (Python 3 only):
+# Notes re Poetry for future consideration:
 # https://en.opensuse.org/openSUSE:Build_system_recipes#PEP517_style:
 # https://github.com/openSUSE/python-rpm-macros/blob/79041e9986dd5427d0bc1f66936092ddfe04533b/README.md#install-macros
 # BuildRequires: python-rpm-macros
@@ -62,10 +62,12 @@ BuildRequires: postgresql13-server-devel
 
 # openSUSE Leap 15.0/15.1/15.2/15.3/15.4/15.5
 %if 0%{?suse_version} == 1500
-BuildRequires: python39
-BuildRequires: python39-devel
-Requires: python39
-Requires: python39-devel
+BuildRequires: python311
+BuildRequires: python311-devel
+BuildRequires: python311-pipx
+Requires: python311
+Requires: python311-devel
+Requires: python311-pipx
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -123,11 +125,12 @@ Requires: make
 # Tumbleweed as of Nov 2022:
 # Version unreliable as changes over time !
 %if 0%{?suse_version} >= 1599
-# Nearest Python 3 in TW to our interim Py3.6 target is 3.8:
-BuildRequires: python39
-BuildRequires: python39-devel
-Requires: python39
-Requires: python39-devel
+BuildRequires: python311
+BuildRequires: python311-devel
+BuildRequires: python311-pipx
+Requires: python311
+Requires: python311-devel
+Requires: python311-pipx
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -217,11 +220,21 @@ cp %{SOURCE1} rockstor-jslibs.tar.gz
 sha256sum rockstor-jslibs.tar.gz > rockstor-jslibs.tar.gz.sha256sum
 
 %build
-# Install poetry if need be.
 # Defaults to e.g. '/usr/src/packages/BUILD/rockstor-core-4.5.2-0/
-curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.1.15 python3 -
-# explicitly add users .local/bin to path to account for more constrained environments.
-PATH="$HOME/.local/bin:$PATH"
+
+# Install Poetry, a dependency management, packaging, and build system.
+# Uninstall legacy/transitional Poetry version of 1.1.15
+PATH="$HOME/.local/bin:$PATH"  # account for more constrained environments.
+if which poetry && poetry --version | grep -q "1.1.15"; then
+  echo "Poetry version 1.1.15 found - UNINSTALLING"
+  curl -sSL https://install.python-poetry.org | python3 - --uninstall
+fi
+# Install Poetry via PIPX as a global app
+# https://peps.python.org/pep-0668/#guide-users-towards-virtual-environments
+export PIPX_HOME=/opt/pipx  # virtual environment location, default ~/.local/pipx
+export PIPX_BIN_DIR=/usr/local/bin  # binary location for pipx-installed apps, default ~/.local/bin
+python3.11 -m pipx install poetry==1.7.1
+
 # create our poetry source distribution in ./dist/rockstor-4.5.2.tar.gz
 poetry build --format sdist
 # N.B. above build installs minimal .venv (via poetry.config) of around 21 MB.
@@ -260,19 +273,17 @@ install -m 644 ./conf/30-rockstor-nginx-override.conf %{buildroot}/etc/systemd/s
 # Run tests from inside build directory.
 # Build full project .venv (via poetry.config) - installing all dependencies.
 # Around 60 MB more than minimum venv (21 MB) installed already by poetry build.
-# explicitly add users .local/bin to path to account for more constrained environments.
-PATH="$HOME/.local/bin:$PATH"
 # --quiet malfunctions prior to 1.2.0b1:
 # https://github.com/python-poetry/poetry/pull/5179
 # Resolve Python 3.6 Poetry issue re char \u2022: (bullet)
 # https://github.com/python-poetry/poetry/issues/3078
 export LANG=C.UTF-8
 export PYTHONIOENCODING=utf8
-poetry install --no-interaction --no-ansi > poetry-install.txt 2>&1
+/usr/local/bin/poetry install --no-interaction --no-ansi > poetry-install.txt 2>&1
 export DJANGO_SETTINGS_MODULE=settings
-poetry run django-admin collectstatic --no-input --verbosity 1
+/usr/local/bin/poetry run django-admin collectstatic --no-input --verbosity 1
 cd src/rockstor/
-poetry run django-admin test
+/usr/local/bin/poetry run django-admin test
 
 %files
 # Define what files shall be owned by the resulting rpm.
@@ -356,10 +367,13 @@ if [ "$1" = "2" ]; then  # update
     # Remove our prior versions .venv dir as build.sh (posttrans) will regenerate.
     rm -rf %{prefix}/%{name}/.venv
 fi
-# Enforce, via manual alternatives configuration, our target postgresql version.
+# Enforce, via manual alternatives configuration, our target postgresql & pipx versions.
 # We do this on install & update to avoid base OS defaults exceeding our compatibility.
-# Compatibility concern primarily Django's secondary dependency of psycopg2 which we pin.
+# Compatibility concerns:
+# - Postgresql: Django's secondary dependency of psycopg which we pin.
+# - Pipx: We install and manage Poetry via OS supplied python3.##-pipx packages.
 update-alternatives --set postgresql /usr/lib/postgresql13
+update-alternatives --set pipx /usr/bin/pipx-3.11
 # enable/disable our units by default on package installation,
 # enforcing distribution, spin or administrator preset policy.
 # See: https://build.opensuse.org/package/show/home:rockstor:branches:Base:System/systemd-presets-branding-rockstor
@@ -415,15 +429,15 @@ exit 0
 # Last scriptlet to execute from old or new package versions.
 # Executed from new package version during install & upgrade similarly.
 #
-# Run build.sh
-# 1. Install Poetry to system.
-# 2. Use it to populate/refresh .venv.
+# Run build.sh which:
+# 1. Installs Poetry to system via pipx.
+# 2. Uses Poetry to create .venv.
 # 3. if no jslibs dir exists:
 #        un-tar rockstor-jslibs.tar.gz
-# 4. Regenerate static dir via collectstatic.
+# 4. Regenerates static dir via collectstatic.
 #
 # We have a minimal path available so add system poetry explicitly.
-PATH="$HOME/.local/bin:$PATH"
+PATH="/usr/local/bin:$PATH"
 export LANG=C.UTF-8
 cd %{prefix}/%{name}
 ./build.sh
