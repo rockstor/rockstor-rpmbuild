@@ -73,14 +73,14 @@ Or you could rsync your local copy of the rockstor-rpmbuild repository, over fro
 ```shell
 zypper install --no-recommends rpm-build
 ```
-**NOTE: Solution 1: deinstallation of busybox-gzip ...**
+**NOTE: Solution 1: de-installation of busybox-gzip ...**
 May be required (replaced by the full gzip).
 See: [pre-install gzip to avoid busybox-gzip via dependency](https://github.com/rockstor/rockstor-installer/issues/135)
 
 
 ## Build the RPM/SRPM
 
-Both the regular RPM, and its source variant (SRPM) can be build with a single command.
+Both the regular RPM, and its source variant (SRPM) can be built with a single command.
 
 ```shell
 # Current dir must be that of the spec file:
