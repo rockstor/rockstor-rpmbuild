@@ -47,6 +47,7 @@ BuildRequires: make
 BuildRequires: postgresql13
 BuildRequires: postgresql13-server
 BuildRequires: postgresql13-server-devel
+BuildRequires: password-store
 # Notes re Poetry for future consideration:
 # https://en.opensuse.org/openSUSE:Build_system_recipes#PEP517_style:
 # https://github.com/openSUSE/python-rpm-macros/blob/79041e9986dd5427d0bc1f66936092ddfe04533b/README.md#install-macros
@@ -119,6 +120,7 @@ Requires: haveged
 Requires: gcc
 Requires: gcc-c++
 Requires: make
+Requires: password-store
 %endif
 
 # TUMBLEWEED
@@ -182,6 +184,7 @@ Requires: haveged
 Requires: gcc
 Requires: gcc-c++
 Requires: make
+Requires: password-store
 %endif
 
 # rpm build notes (from man rpmbuild):
@@ -280,6 +283,14 @@ install -m 644 ./conf/30-rockstor-nginx-override.conf %{buildroot}/etc/systemd/s
 export LANG=C.UTF-8
 export PYTHONIOENCODING=utf8
 /usr/local/bin/poetry install --no-interaction --no-ansi > poetry-install.txt 2>&1
+
+# Ensure GNUPG is setup for 'pass' (Idempotent)
+/usr/bin/gpg --quick-generate-key --batch --passphrase '' rockstor@localhost || true
+# Init 'pass' in ~ using above GPG key, and generate Django SECRET_KEY
+# export Environment="PASSWORD_STORE_DIR=/root/.password-store"
+/usr/bin/pass init rockstor@localhost
+/usr/bin/pass generate --no-symbols --force python-keyring/rockstor/SECRET_KEY 100
+
 export DJANGO_SETTINGS_MODULE=settings
 /usr/local/bin/poetry run django-admin collectstatic --no-input --verbosity 1
 cd src/rockstor/
