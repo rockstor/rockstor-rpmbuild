@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.5
+Version: 5.0.6
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.5
+%define jslibs_version 5.0.6
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -469,6 +469,28 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Tue Jan 16 2024 The Rockstor Project <support@rockstor.com> - 5.0.6-0
+-Bump versions to a 5.0.6 base (Testing) - testing branch #2778 @phillxnet 
+-(t) replication spawn error #2766 @phillxnet 
+-Account for eventual double slahes in the conversion from legacy to poetry paths #2757 @FroggyFlox 
+-Replication secret encrypted in Web-UI #2759 @phillxnet 
+-Make explicit to systemd our NetworkManager dependency #2685 @phillxnet 
+-Adopt dedicated secrets management library #2728 @phillxnet 
+-Add/Update help icon linking to docs #2720 @FroggyFlox 
+-Update Poetry build system & normalise on Python 3.11 #2703 #2754 #2693 @phillxnet @FroggyFlox 
+-update to latest psycopg 3 #2740 @phillxnet 
+-Update Django to latest 4.2 LTS #2750 @phillxnet @Hooverdan96 @FroggyFlox 
+-Update pyzmq dependency to latest #2746 @phillxnet 
+-Update dbus python dependency to latest #2744 @phillxnet 
+-Update Django-rest-framework to latest #2738 @phillxnet 
+-Update Huey task queue library #2731 @phillxnet 
+-Update Django to next LTS #2734 @phillxnet 
+-Ease database diagnosis via local IP access configuration #2730 @phillxnet 
+-Update django-oauth-toolkit #2710 @phillxnet 
+-Address redundancy re database setup #2729 @phillxnet 
+-SyntaxWarning: "is not" with a literal #2713 @phillxnet 
+-Use regular expressions to validate tailscale hostname #2714 @FroggyFlox @Hooverdan96 
+-Fix mocking insufficiencies in system.network.py #2717 @FroggyFlox 
 * Thu Oct 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.5-0
 -Bump versions to a 5.0.5 base (Testing) - testing branch #2715 @phillxnet 
 -Implement Tailscale service #2679 @FroggyFlox 
