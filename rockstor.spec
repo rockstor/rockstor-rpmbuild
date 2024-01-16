@@ -477,7 +477,7 @@ exit 0
 -Make explicit to systemd our NetworkManager dependency #2685 @phillxnet 
 -Adopt dedicated secrets management library #2728 @phillxnet 
 -Add/Update help icon linking to docs #2720 @FroggyFlox 
--Update Poetry build system & normalise on Python 3.11 #2703 #2754 #2693 @phillxnet @FroggyFlox 
+-Update Poetry build system & normalise on Python 3.11 #2703 @phillxnet @FroggyFlox
 -update to latest psycopg 3 #2740 @phillxnet 
 -Update Django to latest 4.2 LTS #2750 @phillxnet @Hooverdan96 @FroggyFlox 
 -Update pyzmq dependency to latest #2746 @phillxnet 
