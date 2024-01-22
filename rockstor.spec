@@ -89,6 +89,7 @@ Requires: firewalld
 Requires: postgresql13
 Requires: postgresql13-server
 Requires: postgresql13-server-devel
+Requires: postgresql13-contrib
 Requires: rsync
 Requires: smartmontools
 Requires: hdparm
@@ -153,6 +154,7 @@ Requires: firewalld
 Requires: postgresql13
 Requires: postgresql13-server
 Requires: postgresql13-server-devel
+Requires: postgresql13-contrib
 Requires: rsync
 Requires: smartmontools
 Requires: hdparm
@@ -304,9 +306,10 @@ cd src/rockstor/
 %defattr(-, root, root)
 # e.g. collected from /usr/src/packages/BUILDROOT/rockstor-4.5.2-0.x86_64
 /opt/%{name}
-# enable owner (root) execute on build.sh.
+# enable owner (root) execute on ./build.sh & ./src/rockstor/scripts/db_upgrade.sh
 # TODO: "warning: File listed twice: /opt/rockstor/build.sh"
 %attr(744, root, root) /opt/%{name}/build.sh
+%attr(744, root, root) /opt/%{name}/src/rockstor/scripts/db_upgrade.sh
 # all rockstro* service files from buildroot
 %{_unitdir}/%{name}*
 # Our nginx override dir and all contents:
@@ -439,6 +442,12 @@ exit 0
 #
 # Last scriptlet to execute from old or new package versions.
 # Executed from new package version during install & upgrade similarly.
+#
+# Ensure Postgres DB format is sufficiently upgraded before invoking build.sh.
+# Requires matching postgresqlXX-* dependencies to target format requested.
+# If a system currently uses an older DB format, the associated binaries are assumed.
+# "10 13" prepares Leap 15.3 4.1.0-0 installs, dup'ed to 15.4 4.6.1-0, for > 5.0.5-0.
+%{prefix}/%{name}/src/rockstor/scripts/db_upgrade.sh 10 13
 #
 # Run build.sh which:
 # 1. Installs Poetry to system via pipx.
