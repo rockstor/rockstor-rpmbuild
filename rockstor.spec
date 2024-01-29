@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.6
+Version: 5.0.7
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.6
+%define jslibs_version 5.0.7
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -478,6 +478,11 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Mon Jan 29 2024 The Rockstor Project <support@rockstor.com> - 5.0.7-0
+-Bump versions to a 5.0.7 base - testing branch #2791 @phillxnet 
+-Failure to re-create venv - pre 5.0.3-0 updating to 5.0.6-0 rpm #2788 @phillxnet 
+-Establish Postgres database format upgrade #2780 @phillxnet 
+-Failure to remove legacy poetry version in 5.0.6-0 rpm #2782 @phillxnet 
 * Tue Jan 16 2024 The Rockstor Project <support@rockstor.com> - 5.0.6-0
 -Bump versions to a 5.0.6 base (Testing) - testing branch #2778 @phillxnet 
 -(t) replication spawn error #2766 @phillxnet 
