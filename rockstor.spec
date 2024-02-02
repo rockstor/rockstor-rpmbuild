@@ -226,23 +226,11 @@ sha256sum rockstor-jslibs.tar.gz > rockstor-jslibs.tar.gz.sha256sum
 
 %build
 # Defaults to e.g. '/usr/src/packages/BUILD/rockstor-core-4.5.2-0/
-
-# Install Poetry, a dependency management, packaging, and build system.
-# Uninstall legacy/transitional Poetry version of 1.1.15
-PATH="$HOME/.local/bin:$PATH"  # account for more constrained environments.
-if which poetry && poetry --version | grep -q "1.1.15"; then
-  echo "Poetry version 1.1.15 found - UNINSTALLING"
-  curl -sSL https://install.python-poetry.org | python3 - --uninstall
-fi
-# Install Poetry via PIPX as a global app
-# https://peps.python.org/pep-0668/#guide-users-towards-virtual-environments
-export PIPX_HOME=/opt/pipx  # virtual environment location, default ~/.local/pipx
-export PIPX_BIN_DIR=/usr/local/bin  # binary location for pipx-installed apps, default ~/.local/bin
-python3.11 -m pipx install poetry==1.7.1
-
-# create our poetry source distribution in ./dist/rockstor-4.5.2.tar.gz
+echo "'build' scriptlet PATH=${PATH}"
+# Poetry install assumed, as per rockstor-build.service / build.sh.
+# Create our poetry source distribution in ./dist/rockstor-4.5.2.tar.gz
 poetry build --format sdist
-# N.B. above build installs minimal .venv (via poetry.config) of around 21 MB.
+# N.B. above build installs minimal .venv (via poetry.toml) of around 12 MB.
 # see contents via: tar tvf ./dist/rockstor-4.5.2.tar.gz
 # which shows top embedded directory of "rockstor-4.5.2"
 
@@ -267,6 +255,7 @@ touch %{buildroot}%{prefix}/rockstor/var/log/rockstor_systems_log_dir
 # _unitdir normally resolves to: /usr/lib/systemd/system
 # N.B. we could run a sed here on all our service files to honour prefix.
 # Main rocksor* service files.
+install -D -m 644 ./conf/rockstor-build.service %{buildroot}%{_unitdir}/%{name}-build.service
 install -D -m 644 ./conf/rockstor-pre.service %{buildroot}%{_unitdir}/%{name}-pre.service
 install -D -m 644 ./conf/rockstor.service %{buildroot}%{_unitdir}/%{name}.service
 install -D -m 644 ./conf/rockstor-bootstrap.service %{buildroot}%{_unitdir}/%{name}-bootstrap.service
@@ -276,27 +265,20 @@ install -m 644 ./conf/30-rockstor-nginx-override.conf %{buildroot}/etc/systemd/s
 
 %check
 # Run tests from inside build directory.
-# Build full project .venv (via poetry.config) - installing all dependencies.
-# Around 60 MB more than minimum venv (21 MB) installed already by poetry build.
-# --quiet malfunctions prior to 1.2.0b1:
-# https://github.com/python-poetry/poetry/pull/5179
-# Resolve Python 3.6 Poetry issue re char \u2022: (bullet)
-# https://github.com/python-poetry/poetry/issues/3078
-export LANG=C.UTF-8
-export PYTHONIOENCODING=utf8
-/usr/local/bin/poetry install --no-interaction --no-ansi > poetry-install.txt 2>&1
+echo "'check' scriptlet PATH=${PATH}"
+# Build full project .venv (via poetry.config) - installing all dependencies: 140 MB
+env > poetry-install.txt
+poetry --version >> poetry-install.txt
+# /usr/local/bin/poetry -> /opt/pipx/venvs/poetry
+poetry install -vvv --no-interaction --no-ansi >> poetry-install.txt 2>&1
 
-# Ensure GNUPG is setup for 'pass' (Idempotent)
-/usr/bin/gpg --quick-generate-key --batch --passphrase '' rockstor@localhost || true
-# Init 'pass' in ~ using above GPG key, and generate Django SECRET_KEY
-# export Environment="PASSWORD_STORE_DIR=/root/.password-store"
-/usr/bin/pass init rockstor@localhost
-/usr/bin/pass generate --no-symbols --force python-keyring/rockstor/SECRET_KEY 100
-
+# GNUPG & 'pass' setup assumed, as per rockstor-build.service / build.sh,
+# with re-assertion, and key rotation via rockstor-pre.service.
+export Environment="PASSWORD_STORE_DIR=/root/.password-store"
 export DJANGO_SETTINGS_MODULE=settings
-/usr/local/bin/poetry run django-admin collectstatic --no-input --verbosity 1
+poetry run django-admin collectstatic --no-input --verbosity 1
 cd src/rockstor/
-/usr/local/bin/poetry run django-admin test
+poetry run django-admin test
 
 %files
 # Define what files shall be owned by the resulting rpm.
@@ -341,7 +323,7 @@ cd src/rockstor/
 # $1 == 2 is before an update
 #
 # Stop all main rockstor services, irrespective of origin.
-/usr/bin/systemctl stop rockstor-bootstrap.service rockstor.service rockstor-pre.service
+/usr/bin/systemctl stop rockstor-bootstrap.service rockstor.service rockstor-pre.service rockstor-build.service
 #
 # Backup all static/config-backups contents; to be restored in posttrans scriptlet.
 if [ -d "%{prefix}/%{name}/static/config-backups" ]
@@ -365,7 +347,7 @@ rm --force --recursive %{prefix}/%{name}/eggs
 # https://en.opensuse.org/openSUSE:Systemd_packaging_guidelines#Unit_files
 # See: /usr/lib/rpm/macros.d/macros.systemd from systemd-rpm-macros
 # rpm --eval macro-name-here
-%service_add_pre rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_add_pre rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
 %post
@@ -391,7 +373,7 @@ update-alternatives --set pipx /usr/bin/pipx-3.11
 # enable/disable our units by default on package installation,
 # enforcing distribution, spin or administrator preset policy.
 # See: https://build.opensuse.org/package/show/home:rockstor:branches:Base:System/systemd-presets-branding-rockstor
-%service_add_post rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_add_post rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
 %preun
@@ -400,7 +382,7 @@ exit 0
 # $1 == 1 is before an update
 #
 # If uninstall, the following service macro disables and stops our services.
-%service_del_preun rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_del_preun rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
 %postun
@@ -412,7 +394,7 @@ exit 0
 
 # If units are not to be restarted, use % service_del_postun_without_restart
 # On uninstall the following service macro deletes our services, then does a 'systemctl daemon-reload'
-%service_del_postun_without_restart rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_del_postun_without_restart rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
 
 # Post uninstall we need to restart the nginx service as we removed our nginx override file.
 if [ "$1" = "0" ]; then  # uninstall so clean up build.sh generated files and other dynamic files.
@@ -443,24 +425,11 @@ exit 0
 # Last scriptlet to execute from old or new package versions.
 # Executed from new package version during install & upgrade similarly.
 #
-# Ensure Postgres DB format is sufficiently upgraded before invoking build.sh.
+# Ensure Postgres DB format is sufficiently upgraded prior to systemd services start.
 # Requires matching postgresqlXX-* dependencies to target format requested.
 # If a system currently uses an older DB format, the associated binaries are assumed.
 # "10 13" prepares Leap 15.3 4.1.0-0 installs, dup'ed to 15.4 4.6.1-0, for > 5.0.5-0.
 %{prefix}/%{name}/src/rockstor/scripts/db_upgrade.sh 10 13
-#
-# Run build.sh which:
-# 1. Installs Poetry to system via pipx.
-# 2. Uses Poetry to create .venv.
-# 3. if no jslibs dir exists:
-#        un-tar rockstor-jslibs.tar.gz
-# 4. Regenerates static dir via collectstatic.
-#
-# We have a minimal path available so add system poetry explicitly.
-PATH="/usr/local/bin:$PATH"
-export LANG=C.UTF-8
-cd %{prefix}/%{name}
-./build.sh
 #
 # Restore 'pre' scriptlet's config-backup-rpmsave files to static.
 if [ -d "%{prefix}/%{name}/config-backups-rpmsave" ]
