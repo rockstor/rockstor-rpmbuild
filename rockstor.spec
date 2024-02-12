@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.7
+Version: 5.0.8
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.7
+%define jslibs_version 5.0.8
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,10 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Mon Feb 12 2024 The Rockstor Project <support@rockstor.com> - 5.0.8-0
+-Bump versions to a 5.0.8 base - testing branch #2800 @phillxnet 
+-(t) Samba shares not accessible - 5.0.6-0 & 5.0.7-0 #2794 @phillxnet @FroggyFlox @Hooverdan96 
+-Add rockstor-build systemd service #2793 @phillxnet 
 * Mon Jan 29 2024 The Rockstor Project <support@rockstor.com> - 5.0.7-0
 -Bump versions to a 5.0.7 base - testing branch #2791 @phillxnet 
 -Failure to re-create venv - pre 5.0.3-0 updating to 5.0.6-0 rpm #2788 @phillxnet 
