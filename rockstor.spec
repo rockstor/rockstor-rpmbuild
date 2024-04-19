@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.8
+Version: 5.0.9
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.8
+%define jslibs_version 5.0.9
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,18 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri Apr 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.9-0
+-Bump versions to a 5.0.9 base - testing branch #2837 @phillxnet @FroggyFlox 
+-DRF, Django LTS, and Gunicorn maintenance updates #2820 @phillxnet @FroggyFlox 
+-Un special-case system drive btrfs-in-partition treatment #2824 @phillxnet 
+-Unit test improvements re Disk miss-attribution to ROOT pool #2828 @phillxnet 
+-Modernise scan_disks() - no functional change intended #2826 @phillxnet 
+-Adapt net interface delete to 'rockstor' service null config #2819 @phillxnet 
+-Change Quota Status Display Wording #2810 @Hooverdan96 
+-TypeError when deleting unused Rocknet #2814 @phillxnet @FroggyFlox 
+-[t] Add Group with custom GID fails with type error #2807 @phillxnet @Hooverdan96 
+-Scheduled shutdown task fails due to type issue #2805 @phillxnet @Hooverdan96 
+-Replace raw_input() with input() #2803 @Hooverdan96 
 * Mon Feb 12 2024 The Rockstor Project <support@rockstor.com> - 5.0.8-0
 -Bump versions to a 5.0.8 base - testing branch #2800 @phillxnet 
 -(t) Samba shares not accessible - 5.0.6-0 & 5.0.7-0 #2794 @phillxnet @FroggyFlox @Hooverdan96 
