@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.9
+Version: 5.0.10
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.9
+%define jslibs_version 5.0.10
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,10 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Mon Jun 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.10-0
+-Bump versions to a 5.0.10 base - testing branch #2848 @phillxnet 
+-Routine update of dependencies #2849 @phillxnet 
+-5.0.6-0 to 5.0.9-0 Configuration Backup file upload fails #2846 @Hooverdan96 @FroggyFlox @phillxnet 
 * Fri Apr 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.9-0
 -Bump versions to a 5.0.9 base - testing branch #2837 @phillxnet @FroggyFlox 
 -DRF, Django LTS, and Gunicorn maintenance updates #2820 @phillxnet @FroggyFlox 
