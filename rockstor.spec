@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.10
+Version: 5.0.11
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.10
+%define jslibs_version 5.0.11
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,11 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Wed Jul 03 2024 The Rockstor Project <support@rockstor.com> - 5.0.11-0
+-Bump versions to a 5.0.11 base - testing branch #2859 @phillxnet 
+-Routine update of dependencies #2861 @phillxnet 
+-Leap 15.6: SFTP share error - library paths changed #2856 @Hooverdan96 @phillxnet @FroggyFlox  
+-5.0.9-0 & 5.0.10-0 lsblk whitespace only values - not enough values to unpack #2853 @phillxnet 
 * Mon Jun 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.10-0
 -Bump versions to a 5.0.10 base - testing branch #2848 @phillxnet 
 -Routine update of dependencies #2849 @phillxnet 
