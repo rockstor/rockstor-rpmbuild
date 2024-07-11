@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.11
+Version: 5.0.12
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.11
+%define jslibs_version 5.0.12
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,13 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Thu Jul 11 2024 The Rockstor Project <support@rockstor.com> - 5.0.12-0
+-Bump versions to a 5.0.12 base - testing branch #2870 @phillxnet 
+-Routine update of dependencies #2868 @phillxnet 
+-[t] Indicate Tailscale install requirement #2845 @phillxnet @FroggyFlox 
+-revise restricted system usernames #2634  @phillxnet @Hooverdan96 
+-SFTP user chroot shell path update & ls addition #2863 @phillxnet 
+-Config restore: samba share exports not consistently restored #2847 @Hooverdan96 @FroggyFlox @phillxnet 
 * Wed Jul 03 2024 The Rockstor Project <support@rockstor.com> - 5.0.11-0
 -Bump versions to a 5.0.11 base - testing branch #2859 @phillxnet 
 -Routine update of dependencies #2861 @phillxnet 
