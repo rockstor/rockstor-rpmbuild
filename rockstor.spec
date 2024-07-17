@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.12
+Version: 5.0.13
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.12
+%define jslibs_version 5.0.13
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,11 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Wed Jul 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.13-0
+-Bump versions to a 5.0.13 base - testing branch #2877 @phillxnet 
+-Routine update of dependencies #2875 @phillxnet 
+-Quota file exists error on Share resize #2854 @phillxnet 
+-Scrub status "unknown" - Leap 15.6 OS base #2872 @phillxnet @FroggyFlox @Hooverdan96 
 * Thu Jul 11 2024 The Rockstor Project <support@rockstor.com> - 5.0.12-0
 -Bump versions to a 5.0.12 base - testing branch #2870 @phillxnet 
 -Routine update of dependencies #2868 @phillxnet 
