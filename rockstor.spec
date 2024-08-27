@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.13
+Version: 5.0.14
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.13
+%define jslibs_version 5.0.14
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,15 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Tue Aug 27 2024 The Rockstor Project <support@rockstor.com> - 5.0.14-0
+-Bump versions to a 5.0.14 base - testing branch #2894 @phillxnet 
+-Routine update of dependencies #2897 @phillxnet 
+-Update Copyright notices #2883 @phillxnet @FroggyFlox @schakrava @Hooverdan96 
+-Rock-on install wizard obfuscates share container info #2886 @phillxnet 
+-Rockons: Invalid environment variable (...) #1588 @phillxnet @anatox @daniel-illi @FroggyFlox 
+-Block creation of system reserved Share names #2881 @phillxnet 
+-Disk activity widget inactive - Tumbleweed #2844 @phillxnet @Hooverdan96 @FroggyFlox 
+-Pi4 fails on reboot #2843 @phillxnet 
 * Wed Jul 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.13-0
 -Bump versions to a 5.0.13 base - testing branch #2877 @phillxnet 
 -Routine update of dependencies #2875 @phillxnet 
