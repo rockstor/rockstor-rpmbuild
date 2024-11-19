@@ -448,7 +448,6 @@ exit 0
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
 * Tue Nov 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.15-0
--@cellisten made their first contribution 
 -Bump version to a 5.0.15 base - testing branch #2930 @phillxnet 
 -Remove obsolete browser compatibility - html5shim #2920 @phillxnet @Hooverdan96 
 -NFS exports restored as read-only #2912 @phillxnet @Hooverdan96 
