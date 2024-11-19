@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.14
+Version: 5.0.15
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.14
+%define jslibs_version 5.0.15
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -447,6 +447,19 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Tue Nov 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.15-0
+-Bump version to a 5.0.15 base - testing branch #2930 @phillxnet
+-Remove obsolete browser compatibility - html5shim #2920 @phillxnet @Hooverdan96
+-NFS exports restored as read-only #2912 @phillxnet @Hooverdan96
+-Inactive NFS export validation #2924 @phillxnet
+-NFS tests in need of maintenance #2923 @phillxnet
+-Normalise on 'Rockstor' capitalization #2916 @phillxnet
+-Routine update of dependencies after additional pinning #2917 @phillxnet @FroggyFlox
+-Refactor lsblk, resolves issue re leading space in values #2907 @cellisten @Hooverdan96
+-Rockon pre & post-install summaries are inconsistent #2904 @phillxnet @Hooverdan96
+-replication received_uuid blocker re snap to share promotion #2902 @phillxnet @Hooverdan96
+-Use pyproject.toml's 'version' in build.sh #2895 @phillxnet
+-Update email domain, co-maintainer, etc in pyproject.toml #2889 @phillxnet @FroggyFlox
 * Tue Aug 27 2024 The Rockstor Project <support@rockstor.com> - 5.0.14-0
 -Bump versions to a 5.0.14 base - testing branch #2894 @phillxnet 
 -Routine update of dependencies #2897 @phillxnet 
