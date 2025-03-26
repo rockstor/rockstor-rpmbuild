@@ -113,7 +113,6 @@ Requires: sssd-tools
 Requires: sssd-ad
 Requires: sssd-ldap
 Requires: sssd-dbus
-Requires: dmraid
 Requires: libzmq5
 Requires: dbus-1-devel
 Requires: glib2-devel
@@ -178,7 +177,6 @@ Requires: sssd-tools
 Requires: sssd-ad
 Requires: sssd-ldap
 Requires: sssd-dbus
-Requires: dmraid
 Requires: libzmq5
 Requires: dbus-1-devel
 Requires: glib2-devel
