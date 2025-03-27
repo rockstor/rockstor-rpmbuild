@@ -61,7 +61,7 @@ BuildRequires: password-store
 # "suse_version 1500 for the full time life of SLE15 and openSUSE:Leap:15.x"
 # https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto
 
-# openSUSE Leap 15.0/15.1/15.2/15.3/15.4/15.5
+# openSUSE Leap 15.0/15.1/15.2/15.3/15.4/15.5/15.6
 %if 0%{?suse_version} == 1500
 BuildRequires: python311
 BuildRequires: python311-devel
@@ -84,7 +84,6 @@ Requires: krb5-client
 Requires: ntp
 Requires: at
 Requires: chrony
-Requires: systemtap-runtime
 Requires: firewalld
 Requires: postgresql13
 Requires: postgresql13-server
@@ -124,7 +123,7 @@ Requires: password-store
 Requires: hostname
 %endif
 
-# TUMBLEWEED
+# TUMBLEWEED/Slowroll
 # Tumbleweed as of Nov 2022:
 # Version unreliable as changes over time !
 %if 0%{?suse_version} >= 1599
@@ -149,7 +148,6 @@ Requires: krb5-client
 Requires: ntp
 Requires: at
 Requires: chrony
-Requires: systemtap-runtime
 Requires: firewalld
 Requires: postgresql13
 Requires: postgresql13-server
