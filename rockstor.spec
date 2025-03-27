@@ -121,6 +121,7 @@ Requires: gcc
 Requires: gcc-c++
 Requires: make
 Requires: password-store
+Requires: hostname
 %endif
 
 # TUMBLEWEED
@@ -185,6 +186,7 @@ Requires: gcc
 Requires: gcc-c++
 Requires: make
 Requires: password-store
+Requires: hostname
 %endif
 
 # rpm build notes (from man rpmbuild):
