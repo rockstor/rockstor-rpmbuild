@@ -22,22 +22,47 @@ For contribution guidelines, see:
 ## Getting started
 
 This repository is aimed at developers/enthusiasts only.
-See our [Regular documentation](https://rockstor.com/docs/) for general infomation about Rocksor,
+See our [Regular documentation](https://rockstor.com/docs/) for general information about Rockstor,
 and specifically the [Installation]() subsection for how to install a Rockstor instance.
 The rest of this guide assumes such an instance is in use, and has been fully updated.
+
+## Build-host assumptions
 
 Using an existing Rockstor install ensures that at least our prior dependencies are in place.
 This helps with establishing if any new dependencies are required when making spec file changes.
 The rpmbuild process, within the %check scriptlet, also runs all our existing unit tests.
 As such a properly configured and running Postgres server is required.
-The prior installs rockstor-pre.service (initrock) would have asserted these conditions.
-Otherwise the rpmbuild command will fail on the %check scriptlet stage.
+The prior installs rockstor-pre systemd service (initrock etc.) would have asserted these conditions.
+Otherwise, the rpmbuild command will fail on the %check scriptlet stage.
+
+A PIPX instantiated Poetry instance is another host requirement already established in an existing Rockstor install.
+The rockstor-build systemd service is responsible for establishing this requirement.
+Before running rpmbuild on a non-prior Rockstor install,
+reference should be made to the associated build.sh that the rockstor-build service runs.
+This script is the canonical reference for how the related branch installs it required Poetry instance.
+Along with any Poetry plugins injected into the same PIPX managed Poetry virtual environment.
+Note that an RPM instance of Poetry should not be installed.
+The rpmbuild process and the associated rockstor-core build requires an exactly specified Poetry version.
+And subsequent 'rockstor' package updates/upgrades manage, via PIPX, this Poetry + plugins instance.
+
+PIPX itself is required to be Python version specific.
+When using a non-prior Rockstor install as an rpmbuild host,
+look to the `%post` RPM spec file scriptlet for the relevant `update-alternatives` commands.
+
+I.e. for a Python3.11 based rockstor-core codebase the following would apply:
+
+N.B. not required when using a prior rockstor install based on the same Python version. 
+
+```shell
+zypper --non-interactive in python311-pipx
+update-alternatives --set pipx /usr/bin/pipx-3.11
+```
 
 ### Remove the existing package
 
 See: [Remove the Existing Rockstor RPM install](https://rockstor.com/docs/contribute/contribute.html#remove-the-existing-rockstor-rpm-install)
 
-### Establish rpm spec file
+### Establish RPM spec file
 
 The RPM spec file named **rockstor.spec** is required on the prior installer instance.
 
@@ -109,7 +134,7 @@ and places it in the `.venv` subdirectory of `/opt/%{name}`.
 All official Rockstor packages, and their host repositories, are signed by the project.
 As such a hand/custom-built package will have no signature.
 Options:
-1) The fix is to sign you rpm.
+1) The fix is to sign you RPM package.
 2) The workaround (reasonable for development testing) is to ignoe gpg checks via e.g.:
     ```shell
     zypper --no-gpg-checks /usr/src/packages/RPMS/x86_64/rockstor-4.5.7-0.x86_64.rpm
