@@ -164,8 +164,8 @@ Requires: nut-drivers-net
 Requires: net-snmp
 Requires: docker
 Requires: cryptsetup
-Requires: dnf-yum
-Requires: dnf-plugins-core
+Requires: dnf5
+Requires: dnf5-plugins
 Requires: python3-python-dateutil
 Requires: which
 Requires: shellinabox
