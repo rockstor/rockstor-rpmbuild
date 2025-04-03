@@ -69,6 +69,7 @@ BuildRequires: python311-pipx
 Requires: python311
 Requires: python311-devel
 Requires: python311-pipx
+Requires: python311-rpm
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -133,6 +134,7 @@ BuildRequires: python311-pipx
 Requires: python311
 Requires: python311-devel
 Requires: python311-pipx
+Requires: python311-rpm
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -164,8 +166,6 @@ Requires: nut-drivers-net
 Requires: net-snmp
 Requires: docker
 Requires: cryptsetup
-Requires: dnf-yum
-Requires: dnf-plugins-core
 Requires: python3-python-dateutil
 Requires: which
 Requires: shellinabox
