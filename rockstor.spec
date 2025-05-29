@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.0.15
+Version: 5.1.0
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.0.15
+%define jslibs_version 5.1.0
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -443,6 +443,26 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Thu May 29 2025 The Rockstor Project <support@rockstor.com> - 5.1.0-0
+-Bump version to a 5.1.0 base #2967 @phillxnet 
+-Routine update of dependencies after DRF pinning #2990 @phillxnet @FroggyFlox 
+-Tumbleweed-Slowroll - UserTests valid_pubkey no longer valid #2992 @phillxnet @FroggyFlox 
+-Erase prior GPG key from rpm #2988 @phillxnet @FroggyFlox 
+-Update public GPG key #2986 @phillxnet @FroggyFlox @Hooverdan96 
+-Web UI delay/timeout while waiting on yum changelog #2286 @phillxnet 
+-Web UI delay/timeout while waiting on yum info installed #2285 @phillxnet 
+-non-zero code(7) returned by zypper when rapidly refreshing #2485 @phillxnet 
+-Available and installed pkg versions not shown #2984 @phillxnet 
+-UnboundLocalError: cannot access local variable 'appliance' #2983 @phillxnet 
+-Remove dnf-yum use #2979 @phillxnet 
+-Adapt to Slowroll os-release #2971 @phillxnet 
+-Remove defunct dead-code associated SystemTap artifacts #2965 @phillxnet 
+-Re-establish Django admin interface #2891 @phillxnet 
+-User Pincard generation fails #2958 @phillxnet @FroggyFlox 
+-Normalise menu capitalisation #2960 @Hooverdan96 
+-SMB config for TimeMachine has typo #2952 @simon-77 
+-Routine update of dependencies - plus add docutils #2949 @phillxnet 
+-Swap order of newVolumes representation in summary table #2933 @FroggyFlox 
 * Tue Nov 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.15-0
 -Bump version to a 5.0.15 base - testing branch #2930 @phillxnet
 -Remove obsolete browser compatibility - html5shim #2920 @phillxnet @Hooverdan96
