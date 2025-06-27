@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 4.6.1
+Version: 5.1.0
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 4.6.1
+%define jslibs_version 5.1.0
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -35,10 +35,20 @@ Prefix: /opt
 # which is in-turn exported as a shell variable of RPM_BUILD_ROOT
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-build
 
-BuildRequires: python2
+# Generic build requirements: % check requires a Poetry built venv.
 BuildRequires: systemd
 BuildRequires: systemd-rpm-macros
-# For when we update to current poetry for our build (Python 3 only):
+BuildRequires: git
+BuildRequires: dbus-1-devel
+BuildRequires: glib2-devel
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: make
+BuildRequires: postgresql13
+BuildRequires: postgresql13-server
+BuildRequires: postgresql13-server-devel
+BuildRequires: password-store
+# Notes re Poetry for future consideration:
 # https://en.opensuse.org/openSUSE:Build_system_recipes#PEP517_style:
 # https://github.com/openSUSE/python-rpm-macros/blob/79041e9986dd5427d0bc1f66936092ddfe04533b/README.md#install-macros
 # BuildRequires: python-rpm-macros
@@ -51,10 +61,15 @@ BuildRequires: systemd-rpm-macros
 # "suse_version 1500 for the full time life of SLE15 and openSUSE:Leap:15.x"
 # https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto
 
-# openSUSE Leap 15.0/15.1/15.2/15.3/15.4
+# openSUSE Leap 15.0/15.1/15.2/15.3/15.4/15.5/15.6
 %if 0%{?suse_version} == 1500
-Requires: python
-Requires: python-devel
+BuildRequires: python311
+BuildRequires: python311-devel
+BuildRequires: python311-pipx
+Requires: python311
+Requires: python311-devel
+Requires: python311-pipx
+Requires: python311-rpm
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -70,11 +85,11 @@ Requires: krb5-client
 Requires: ntp
 Requires: at
 Requires: chrony
-Requires: systemtap-runtime
 Requires: firewalld
 Requires: postgresql13
 Requires: postgresql13-server
 Requires: postgresql13-server-devel
+Requires: postgresql13-contrib
 Requires: rsync
 Requires: smartmontools
 Requires: hdparm
@@ -86,21 +101,16 @@ Requires: nut-drivers-net
 Requires: net-snmp
 Requires: docker
 Requires: cryptsetup
-Requires: python3-distro
-Requires: dnf-yum
-Requires: dnf-plugins-core
 Requires: python3-python-dateutil
 Requires: which
 Requires: shellinabox
 Requires: avahi
 Requires: cronie
-Requires: python-xml
 Requires: sssd
 Requires: sssd-tools
 Requires: sssd-ad
 Requires: sssd-ldap
 Requires: sssd-dbus
-Requires: dmraid
 Requires: libzmq5
 Requires: dbus-1-devel
 Requires: glib2-devel
@@ -108,14 +118,21 @@ Requires: haveged
 Requires: gcc
 Requires: gcc-c++
 Requires: make
+Requires: password-store
+Requires: hostname
 %endif
 
-# TUMBLEWEED
+# TUMBLEWEED/Slowroll
 # Tumbleweed as of Nov 2022:
 # Version unreliable as changes over time !
 %if 0%{?suse_version} >= 1599
-Requires: python
-Requires: python-devel
+BuildRequires: python311
+BuildRequires: python311-devel
+BuildRequires: python311-pipx
+Requires: python311
+Requires: python311-devel
+Requires: python311-pipx
+Requires: python311-rpm
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
@@ -131,11 +148,11 @@ Requires: krb5-client
 Requires: ntp
 Requires: at
 Requires: chrony
-Requires: systemtap-runtime
 Requires: firewalld
 Requires: postgresql13
 Requires: postgresql13-server
 Requires: postgresql13-server-devel
+Requires: postgresql13-contrib
 Requires: rsync
 Requires: smartmontools
 Requires: hdparm
@@ -147,21 +164,16 @@ Requires: nut-drivers-net
 Requires: net-snmp
 Requires: docker
 Requires: cryptsetup
-Requires: python3-distro
-Requires: dnf-yum
-Requires: dnf-plugins-core
 Requires: python3-python-dateutil
 Requires: which
 Requires: shellinabox
 Requires: avahi
 Requires: cronie
-Requires: python-xml
 Requires: sssd
 Requires: sssd-tools
 Requires: sssd-ad
 Requires: sssd-ldap
 Requires: sssd-dbus
-Requires: dmraid
 Requires: libzmq5
 Requires: dbus-1-devel
 Requires: glib2-devel
@@ -169,6 +181,8 @@ Requires: haveged
 Requires: gcc
 Requires: gcc-c++
 Requires: make
+Requires: password-store
+Requires: hostname
 %endif
 
 # rpm build notes (from man rpmbuild):
@@ -207,14 +221,12 @@ cp %{SOURCE1} rockstor-jslibs.tar.gz
 sha256sum rockstor-jslibs.tar.gz > rockstor-jslibs.tar.gz.sha256sum
 
 %build
-# Install poetry if need be.
 # Defaults to e.g. '/usr/src/packages/BUILD/rockstor-core-4.5.2-0/
-curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.1.15 python3 -
-# explicitly add users .local/bin to path to account for more constrained environments.
-PATH="$HOME/.local/bin:$PATH"
-# create our poetry source distribution in ./dist/rockstor-4.5.2.tar.gz
+echo "'build' scriptlet PATH=${PATH}"
+# Poetry install assumed, as per rockstor-build.service / build.sh.
+# Create our poetry source distribution in ./dist/rockstor-4.5.2.tar.gz
 poetry build --format sdist
-# N.B. above build installs minimal .venv (via poetry.config) of around 21 MB.
+# N.B. above build installs minimal .venv (via poetry.toml) of around 12 MB.
 # see contents via: tar tvf ./dist/rockstor-4.5.2.tar.gz
 # which shows top embedded directory of "rockstor-4.5.2"
 
@@ -239,6 +251,7 @@ touch %{buildroot}%{prefix}/rockstor/var/log/rockstor_systems_log_dir
 # _unitdir normally resolves to: /usr/lib/systemd/system
 # N.B. we could run a sed here on all our service files to honour prefix.
 # Main rocksor* service files.
+install -D -m 644 ./conf/rockstor-build.service %{buildroot}%{_unitdir}/%{name}-build.service
 install -D -m 644 ./conf/rockstor-pre.service %{buildroot}%{_unitdir}/%{name}-pre.service
 install -D -m 644 ./conf/rockstor.service %{buildroot}%{_unitdir}/%{name}.service
 install -D -m 644 ./conf/rockstor-bootstrap.service %{buildroot}%{_unitdir}/%{name}-bootstrap.service
@@ -248,17 +261,16 @@ install -m 644 ./conf/30-rockstor-nginx-override.conf %{buildroot}/etc/systemd/s
 
 %check
 # Run tests from inside build directory.
-# Build full project .venv (via poetry.config) - installing all dependencies.
-# Around 60 MB more than minimum venv (21 MB) installed already by poetry build.
-# explicitly add users .local/bin to path to account for more constrained environments.
-PATH="$HOME/.local/bin:$PATH"
-# --quiet malfunctions prior to 1.2.0b1:
-# https://github.com/python-poetry/poetry/pull/5179
-# Resolve Python 3.6 Poetry issue re char \u2022: (bullet)
-# https://github.com/python-poetry/poetry/issues/3078
-export LANG=C.UTF-8
-export PYTHONIOENCODING=utf8
-poetry install --no-interaction --no-ansi > poetry-install.txt 2>&1
+echo "'check' scriptlet PATH=${PATH}"
+# Build full project .venv (via poetry.config) - installing all dependencies: 140 MB
+env > poetry-install.txt
+poetry --version >> poetry-install.txt
+# /usr/local/bin/poetry -> /opt/pipx/venvs/poetry
+poetry install -vvv --no-interaction --no-ansi >> poetry-install.txt 2>&1
+
+# GNUPG & 'pass' setup assumed, as per rockstor-build.service / build.sh,
+# with re-assertion, and key rotation via rockstor-pre.service.
+export Environment="PASSWORD_STORE_DIR=/root/.password-store"
 export DJANGO_SETTINGS_MODULE=settings
 poetry run django-admin collectstatic --no-input --verbosity 1
 cd src/rockstor/
@@ -272,9 +284,10 @@ poetry run django-admin test
 %defattr(-, root, root)
 # e.g. collected from /usr/src/packages/BUILDROOT/rockstor-4.5.2-0.x86_64
 /opt/%{name}
-# enable owner (root) execute on build.sh.
+# enable owner (root) execute on ./build.sh & ./src/rockstor/scripts/db_upgrade.sh
 # TODO: "warning: File listed twice: /opt/rockstor/build.sh"
 %attr(744, root, root) /opt/%{name}/build.sh
+%attr(744, root, root) /opt/%{name}/src/rockstor/scripts/db_upgrade.sh
 # all rockstro* service files from buildroot
 %{_unitdir}/%{name}*
 # Our nginx override dir and all contents:
@@ -287,8 +300,10 @@ poetry run django-admin test
 
 
 # N.B. Package update runs
-#-
-#- %pretrans of new version
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/Scriptlets/#ordering
+# view installed package scriptlets via: "rpm -q --scripts rockstor"
+#
+#- %pretrans of new version (Lua only)
 #- %pre of new version
 # New package installed.
 #- %post of new version
@@ -299,25 +314,40 @@ poetry run django-admin test
 #- %posttrans of new package
 
 %pre
-# Before install/update
+# Before install/update (run from new/incoming package version)
 # $1 == 1 is before an install
 # $1 == 2 is before an update
 #
+# Stop all main rockstor services, irrespective of origin.
+/usr/bin/systemctl stop rockstor-bootstrap.service rockstor.service rockstor-pre.service rockstor-build.service
+#
+# Backup all static/config-backups contents; to be restored in posttrans scriptlet.
+if [ -d "%{prefix}/%{name}/static/config-backups" ]
+then
+    echo "Copying contents of static/config-backups to config-backups-rpmsave."
+    [ ! -d "%{prefix}/%{name}/config-backups-rpmsave" ] && mkdir %{prefix}/%{name}/config-backups-rpmsave
+    cp --preserve=all %{prefix}/%{name}/static/config-backups/* %{prefix}/%{name}/config-backups-rpmsave
+else
+    echo "No static/config-backups directory found."
+fi
+#
+# remove all pyc files (Python interpreter generated)
+find %{prefix}/%{name}/src -name '*.pyc' -delete
 # Before we install, remove non-packaged rockstor legacy/development files:
 rm --force /etc/systemd/system/rockstor*
 systemctl daemon-reload
 # remove legacy bin develop-eggs & eggs directories
-rm --force %{prefix}/%{name}/bin
-rm --force %{prefix}/%{name}/develop-eggs
-rm --force %{prefix}/%{name}/eggs
+rm --force --recursive %{prefix}/%{name}/bin
+rm --force --recursive %{prefix}/%{name}/develop-eggs
+rm --force --recursive %{prefix}/%{name}/eggs
 # https://en.opensuse.org/openSUSE:Systemd_packaging_guidelines#Unit_files
 # See: /usr/lib/rpm/macros.d/macros.systemd from systemd-rpm-macros
 # rpm --eval macro-name-here
-%service_add_pre rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_add_pre rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
 %post
-# After install/update
+# After install/update (run from new/incoming package version)
 # $1 == 1 is after an install
 # $1 == 2 is after an update
 #
@@ -326,27 +356,43 @@ if [ "$1" = "2" ]; then  # update
     rm -rf %{prefix}/%{name}/jslibs
     # Remove collectstatic generated static dir as build.sh (posttrans) will regenerate.
     rm -rf %{prefix}/%{name}/static
+    # Remove our prior versions .venv dir as build.sh (posttrans) will regenerate.
+    rm -rf %{prefix}/%{name}/.venv
 fi
-%service_add_post rockstor-pre.service rockstor.service rockstor-bootstrap.service
+# Enforce, via manual alternatives configuration, our target postgresql & pipx versions.
+# We do this on install & update to avoid base OS defaults exceeding our compatibility.
+# Compatibility concerns:
+# - Postgresql: Django's secondary dependency of psycopg which we pin.
+# - Pipx: We install and manage Poetry via OS supplied python3.##-pipx packages.
+update-alternatives --set postgresql /usr/lib/postgresql13
+update-alternatives --set pipx /usr/bin/pipx-3.11
+# enable/disable our units by default on package installation,
+# enforcing distribution, spin or administrator preset policy.
+# See: https://build.opensuse.org/package/show/home:rockstor:branches:Base:System/systemd-presets-branding-rockstor
+%service_add_post rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
 %preun
-# Before uninstall/update
+# Before uninstall/update (run from old/outgoing package version)
 # $1 == 0 is before an uninstall
 # $1 == 1 is before an update
 #
-%service_del_preun rockstor-pre.service rockstor.service rockstor-bootstrap.service
+# If uninstall, the following service macro disables and stops our services.
+%service_del_preun rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
 exit 0
 
 %postun
-#After uninstall/update
+# After uninstall/update (run from old/outgoing package version)
 # $1 == 0 is after an uninstall
 # $1 == 1 is after an update
 #
 # During package update, % service_del_postun restarts units.
-# If units are not to be restarted, % service_del_postun_without_restart should be used instead.
-%service_del_postun_without_restart rockstor-pre.service rockstor.service rockstor-bootstrap.service
-# We need to restart the nginx service as we removed our nginx override file.
+
+# If units are not to be restarted, use % service_del_postun_without_restart
+# On uninstall the following service macro deletes our services, then does a 'systemctl daemon-reload'
+%service_del_postun_without_restart rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
+
+# Post uninstall we need to restart the nginx service as we removed our nginx override file.
 if [ "$1" = "0" ]; then  # uninstall so clean up build.sh generated files and other dynamic files.
     systemctl restart nginx
     # Remove jslibs directory from rockstor-jslibs.tar.gz
@@ -370,23 +416,26 @@ exit 0
 
 %posttrans
 # From: https://en.opensuse.org/openSUSE:Packaging_scriptlet_snippets
-# the posttrans scriptlet is available form rpm version 4.4 onwards.
+# the posttrans scriptlet is available from rpm version 4.4 onwards.
 #
 # Last scriptlet to execute from old or new package versions.
 # Executed from new package version during install & upgrade similarly.
 #
-# Run build.sh
-# 1. Install poerty to system.
-# 2. Use it to populate/refresh .venv.
-# 3. if no jslibs dir exists:
-#        un-tar rockstor-jslibs.tar.gz
-# 4. Regenerate static dir via collectstatic.
+# Ensure Postgres DB format is sufficiently upgraded prior to systemd services start.
+# Requires matching postgresqlXX-* dependencies to target format requested.
+# If a system currently uses an older DB format, the associated binaries are assumed.
+# "10 13" prepares Leap 15.3 4.1.0-0 installs, dup'ed to 15.4 4.6.1-0, for > 5.0.5-0.
+%{prefix}/%{name}/src/rockstor/scripts/db_upgrade.sh 10 13
 #
-# We have a minimal path available so add system poetry explicitly.
-PATH="$HOME/.local/bin:$PATH"
-export LANG=C.UTF-8
-cd %{prefix}/%{name}
-./build.sh
+# Restore 'pre' scriptlet's config-backup-rpmsave files to static.
+if [ -d "%{prefix}/%{name}/config-backups-rpmsave" ]
+then
+    echo "Restoring config-backups-rpmsave contents to static/config-backups."
+    [ ! -d "%{prefix}/%{name}/static/config-backups" ] && mkdir %{prefix}/%{name}/static/config-backups
+    cp --preserve=all %{prefix}/%{name}/config-backups-rpmsave/* %{prefix}/%{name}/static/config-backups
+else
+    echo "No config-backups-rpmsave directory found."
+fi
 exit 0
 
 
@@ -394,12 +443,172 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
-* Wed Jul 12 2023 The Rockstor Project <support@rockstor.com> - 4.6.1-0
--Bump versions to a 4.6.1 base (Stable) - master branch #2615 @phillxnet 
--Update unit tests re recent SSL Cert update changes #2613 @phillxnet 
--SSL Certificate update doesn't reload nginx #2566 @phillxnet 
--Revise Stable Updates activation re legacy shop removal #2599 @phillxnet 
--Add GitHub Action to trigger post-release updates across repositories #2596 @FroggyFlox 
+* Thu May 29 2025 The Rockstor Project <support@rockstor.com> - 5.1.0-0
+-Bump version to a 5.1.0 base #2967 @phillxnet 
+-Routine update of dependencies after DRF pinning #2990 @phillxnet @FroggyFlox 
+-Tumbleweed-Slowroll - UserTests valid_pubkey no longer valid #2992 @phillxnet @FroggyFlox 
+-Erase prior GPG key from rpm #2988 @phillxnet @FroggyFlox 
+-Update public GPG key #2986 @phillxnet @FroggyFlox @Hooverdan96 
+-Web UI delay/timeout while waiting on yum changelog #2286 @phillxnet 
+-Web UI delay/timeout while waiting on yum info installed #2285 @phillxnet 
+-non-zero code(7) returned by zypper when rapidly refreshing #2485 @phillxnet 
+-Available and installed pkg versions not shown #2984 @phillxnet 
+-UnboundLocalError: cannot access local variable 'appliance' #2983 @phillxnet 
+-Remove dnf-yum use #2979 @phillxnet 
+-Adapt to Slowroll os-release #2971 @phillxnet 
+-Remove defunct dead-code associated SystemTap artifacts #2965 @phillxnet 
+-Re-establish Django admin interface #2891 @phillxnet 
+-User Pincard generation fails #2958 @phillxnet @FroggyFlox 
+-Normalise menu capitalisation #2960 @Hooverdan96 
+-SMB config for TimeMachine has typo #2952 @simon-77 
+-Routine update of dependencies - plus add docutils #2949 @phillxnet 
+-Swap order of newVolumes representation in summary table #2933 @FroggyFlox 
+* Tue Nov 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.15-0
+-Bump version to a 5.0.15 base - testing branch #2930 @phillxnet
+-Remove obsolete browser compatibility - html5shim #2920 @phillxnet @Hooverdan96
+-NFS exports restored as read-only #2912 @phillxnet @Hooverdan96
+-Inactive NFS export validation #2924 @phillxnet
+-NFS tests in need of maintenance #2923 @phillxnet
+-Normalise on 'Rockstor' capitalization #2916 @phillxnet
+-Routine update of dependencies after additional pinning #2917 @phillxnet @FroggyFlox
+-Refactor lsblk, resolves issue re leading space in values #2907 @cellisten @Hooverdan96
+-Rockon pre & post-install summaries are inconsistent #2904 @phillxnet @Hooverdan96
+-replication received_uuid blocker re snap to share promotion #2902 @phillxnet @Hooverdan96
+-Use pyproject.toml's 'version' in build.sh #2895 @phillxnet
+-Update email domain, co-maintainer, etc in pyproject.toml #2889 @phillxnet @FroggyFlox
+* Tue Aug 27 2024 The Rockstor Project <support@rockstor.com> - 5.0.14-0
+-Bump versions to a 5.0.14 base - testing branch #2894 @phillxnet 
+-Routine update of dependencies #2897 @phillxnet 
+-Update Copyright notices #2883 @phillxnet @FroggyFlox @schakrava @Hooverdan96 
+-Rock-on install wizard obfuscates share container info #2886 @phillxnet 
+-Rockons: Invalid environment variable (...) #1588 @phillxnet @anatox @daniel-illi @FroggyFlox 
+-Block creation of system reserved Share names #2881 @phillxnet 
+-Disk activity widget inactive - Tumbleweed #2844 @phillxnet @Hooverdan96 @FroggyFlox 
+-Pi4 fails on reboot #2843 @phillxnet 
+* Wed Jul 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.13-0
+-Bump versions to a 5.0.13 base - testing branch #2877 @phillxnet 
+-Routine update of dependencies #2875 @phillxnet 
+-Quota file exists error on Share resize #2854 @phillxnet 
+-Scrub status "unknown" - Leap 15.6 OS base #2872 @phillxnet @FroggyFlox @Hooverdan96 
+* Thu Jul 11 2024 The Rockstor Project <support@rockstor.com> - 5.0.12-0
+-Bump versions to a 5.0.12 base - testing branch #2870 @phillxnet 
+-Routine update of dependencies #2868 @phillxnet 
+-[t] Indicate Tailscale install requirement #2845 @phillxnet @FroggyFlox 
+-revise restricted system usernames #2634  @phillxnet @Hooverdan96 
+-SFTP user chroot shell path update & ls addition #2863 @phillxnet 
+-Config restore: samba share exports not consistently restored #2847 @Hooverdan96 @FroggyFlox @phillxnet 
+* Wed Jul 03 2024 The Rockstor Project <support@rockstor.com> - 5.0.11-0
+-Bump versions to a 5.0.11 base - testing branch #2859 @phillxnet 
+-Routine update of dependencies #2861 @phillxnet 
+-Leap 15.6: SFTP share error - library paths changed #2856 @Hooverdan96 @phillxnet @FroggyFlox  
+-5.0.9-0 & 5.0.10-0 lsblk whitespace only values - not enough values to unpack #2853 @phillxnet 
+* Mon Jun 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.10-0
+-Bump versions to a 5.0.10 base - testing branch #2848 @phillxnet 
+-Routine update of dependencies #2849 @phillxnet 
+-5.0.6-0 to 5.0.9-0 Configuration Backup file upload fails #2846 @Hooverdan96 @FroggyFlox @phillxnet 
+* Fri Apr 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.9-0
+-Bump versions to a 5.0.9 base - testing branch #2837 @phillxnet @FroggyFlox 
+-DRF, Django LTS, and Gunicorn maintenance updates #2820 @phillxnet @FroggyFlox 
+-Un special-case system drive btrfs-in-partition treatment #2824 @phillxnet 
+-Unit test improvements re Disk miss-attribution to ROOT pool #2828 @phillxnet 
+-Modernise scan_disks() - no functional change intended #2826 @phillxnet 
+-Adapt net interface delete to 'rockstor' service null config #2819 @phillxnet 
+-Change Quota Status Display Wording #2810 @Hooverdan96 
+-TypeError when deleting unused Rocknet #2814 @phillxnet @FroggyFlox 
+-[t] Add Group with custom GID fails with type error #2807 @phillxnet @Hooverdan96 
+-Scheduled shutdown task fails due to type issue #2805 @phillxnet @Hooverdan96 
+-Replace raw_input() with input() #2803 @Hooverdan96 
+* Mon Feb 12 2024 The Rockstor Project <support@rockstor.com> - 5.0.8-0
+-Bump versions to a 5.0.8 base - testing branch #2800 @phillxnet 
+-(t) Samba shares not accessible - 5.0.6-0 & 5.0.7-0 #2794 @phillxnet @FroggyFlox @Hooverdan96 
+-Add rockstor-build systemd service #2793 @phillxnet 
+* Mon Jan 29 2024 The Rockstor Project <support@rockstor.com> - 5.0.7-0
+-Bump versions to a 5.0.7 base - testing branch #2791 @phillxnet 
+-Failure to re-create venv - pre 5.0.3-0 updating to 5.0.6-0 rpm #2788 @phillxnet 
+-Establish Postgres database format upgrade #2780 @phillxnet 
+-Failure to remove legacy poetry version in 5.0.6-0 rpm #2782 @phillxnet 
+* Tue Jan 16 2024 The Rockstor Project <support@rockstor.com> - 5.0.6-0
+-Bump versions to a 5.0.6 base (Testing) - testing branch #2778 @phillxnet 
+-(t) replication spawn error #2766 @phillxnet 
+-Account for eventual double slahes in the conversion from legacy to poetry paths #2757 @FroggyFlox 
+-Replication secret encrypted in Web-UI #2759 @phillxnet 
+-Make explicit to systemd our NetworkManager dependency #2685 @phillxnet 
+-Adopt dedicated secrets management library #2728 @phillxnet 
+-Add/Update help icon linking to docs #2720 @FroggyFlox 
+-Update Poetry build system & normalise on Python 3.11 #2703 @phillxnet @FroggyFlox
+-update to latest psycopg 3 #2740 @phillxnet 
+-Update Django to latest 4.2 LTS #2750 @phillxnet @Hooverdan96 @FroggyFlox 
+-Update pyzmq dependency to latest #2746 @phillxnet 
+-Update dbus python dependency to latest #2744 @phillxnet 
+-Update Django-rest-framework to latest #2738 @phillxnet 
+-Update Huey task queue library #2731 @phillxnet 
+-Update Django to next LTS #2734 @phillxnet 
+-Ease database diagnosis via local IP access configuration #2730 @phillxnet 
+-Update django-oauth-toolkit #2710 @phillxnet 
+-Address redundancy re database setup #2729 @phillxnet 
+-SyntaxWarning: "is not" with a literal #2713 @phillxnet 
+-Use regular expressions to validate tailscale hostname #2714 @FroggyFlox @Hooverdan96 
+-Fix mocking insufficiencies in system.network.py #2717 @FroggyFlox 
+* Thu Oct 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.5-0
+-Bump versions to a 5.0.5 base (Testing) - testing branch #2715 @phillxnet 
+-Implement Tailscale service #2679 @FroggyFlox 
+-remove django-braces dependency #2709 @phillxnet 
+-Use single https session to retrieve all rock-on definitions #2707 @phillxnet 
+-Update gunicorn to latest - use gthread - discrete config file #2702 @phillxnet 
+-Update Requests library to latest #2704 @phillxnet 
+-Update python-socketio & python-engineio to latest #2591 @phillxnet @Hooverdan96 
+-Update Django REST Framework within Django version constraint #2695 @phillxnet 
+-Update django-pipeline to latest #2689 @phillxnet 
+-Update Python dependency to 3.9 #2691 @phillxnet 
+-Provisional Django 2.2 LTS update #2625 @phillxnet 
+-Add PyCharm rock-tests run config #2686 @phillxnet 
+-Don't throw exception when getting supervisord service status #2681 @FroggyFlox 
+* Fri Sep 15 2023 The Rockstor Project <support@rockstor.com> - 5.0.4-0
+-Bump versions to a 5.0.4 base (Testing) - testing branch #2675 @phillxnet 
+-Catch DBusException to not throw error on LDAP group lookup #2673 @FroggyFlox 
+-Explicitly set REALM when querying workgroup #2671 @FroggyFlox 
+-surface Distro Version to breadcrumb bar #2668 @Hooverdan96 
+-Set `Meta.base_manager_name` on 'storageadmin.Disk' #2666 @FroggyFlox 
+-Use user.is_authenticated as an attribute #2664 @FroggyFlox 
+-Migrate to New Middleware style #2662 @FroggyFlox 
+* Sat Aug 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.3-0
+-Save and Restore config back-up files during rpm update #2660 @Hooverdan96 @phillxnet @FroggyFlox 
+-(t) Update django-pipeline to 1.7.0 #2646 @FroggyFlox 
+-Improve rockstor.service re robustness #2657 @phillxnet 
+-Improve Web-UI update re systemd service management #2651 @phillxnet 
+-Enhance development ease #2653 @phillxnet 
+-Web-UI update fails to recreate venv #2652 @FroggyFlox @phillxnet 
+-Establish on_delete for ForeignKey re Django update #2645 @phillxnet 
+-Address compression cosmetics #2640 @StephenBrown2 
+-Update .gitignore with Rockstor build artifacts #2644 @StephenBrown2 
+* Wed Aug 02 2023 The Rockstor Project <support@rockstor.com> - 5.0.2-0
+-resolve indeterminate or inappropriate postgresql alternative conf #2632 @phillxnet 
+-Add option for ZSTD compression #2618 @StephenBrown2 
+-Improve OS independence re unit tests #2633 @phillxnet 
+-user admin enable without password change not internal error #2635 @phillxnet 
+* Mon Jul 24 2023 The Rockstor Project <support@rockstor.com> - 5.0.1-0
+-venv not updating re python version change #2626 @phillxnet 
+-(t) Failure to check for updates in locales other than en_US #2627 @phillxnet 
+* Fri Jul 21 2023 The Rockstor Project <support@rockstor.com> - 5.0.0-0
+-WARNING -- RENEWED TESTING PHASE 5.0.0-0 -- (DEVELOPERS ONLY) #2610 @phillxnet 
+-Update specifics of Python version in pyproject.toml etc #2620 @phillxnet 
+-Update unit tests re recent SSL Cert update changes #2611 @phillxnet 
+-update use of python distro module re 1.7.0+ changes #2426 @phillxnet 
+-Disposition of pytz package #2590 @phillxnet 
+-SSL Certificate update doesn't reload nginx #2606 @phillxnet 
+-Testing counterpart Revise Stable Updates activation re legacy shop removal #2603 @phillxnet 
+-Add GitHub Action to trigger post-release updates across repositories #2600  @FroggyFlox 
+-Restore config backup functionality #2569 @FroggyFlox 
+-Py3.6 Update certifi, urllib3, idna #2588 @phillxnet 
+-Restore Logs Manager - Logs Readers functions #2568 @FroggyFlox 
+-Py3.6 Scheduled tasks import paths fix, snapshot & scub #2570 @phillxnet 
+-Py3.6 test_user.py fail re string interpretation #2582 @phillxnet 
+-Save network usage processed data as List object #2577 @FroggyFlox 
+-Py3.6 test_shares.py & test_snapshot.py re boolean type #2580 @phillxnet 
+-Py3.6 ModuleNotFoundError: 'crontabwindow', 'nfsd_calls' - tests #2578 @phillxnet 
+-Py3.6 ModuleNotFoundError: No module named 'mock' - tests #2575 @phillxnet 
+-Py3.6 update test_btrfs.py and use built-in mock #2571 @phillxnet 
+-Preliminary python 3.6 port - development #2564 @phillxnet 
 * Tue May 30 2023 Philip Guyton <philip@yewtreeapps.com> - 4.6.0-0
 -Merge testing branch into master #2529 @phillxnet
 -Bump versions to a 4.6.0 base (RC7) #2561 @phillxnet
