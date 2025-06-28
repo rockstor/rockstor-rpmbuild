@@ -608,7 +608,13 @@ exit 0
 -Py3.6 ModuleNotFoundError: 'crontabwindow', 'nfsd_calls' - tests #2578 @phillxnet 
 -Py3.6 ModuleNotFoundError: No module named 'mock' - tests #2575 @phillxnet 
 -Py3.6 update test_btrfs.py and use built-in mock #2571 @phillxnet 
--Preliminary python 3.6 port - development #2564 @phillxnet 
+-Preliminary python 3.6 port - development #2564 @phillxnet
+* Wed Jul 12 2023 The Rockstor Project <support@rockstor.com> - 4.6.1-0
+-Bump versions to a 4.6.1 base (Stable) - master branch #2615 @phillxnet
+-Update unit tests re recent SSL Cert update changes #2613 @phillxnet
+-SSL Certificate update doesn't reload nginx #2566 @phillxnet
+-Revise Stable Updates activation re legacy shop removal #2599 @phillxnet
+-Add GitHub Action to trigger post-release updates across repositories #2596 @FroggyFlox
 * Tue May 30 2023 Philip Guyton <philip@yewtreeapps.com> - 4.6.0-0
 -Merge testing branch into master #2529 @phillxnet
 -Bump versions to a 4.6.0 base (RC7) #2561 @phillxnet
