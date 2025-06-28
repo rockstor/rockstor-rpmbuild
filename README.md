@@ -76,7 +76,7 @@ zypper --non-interactive install --no-recommends git
 cd /opt
 git clone https://github.com/your_github_username/rockstor-rpmbuild.git
 cd rockstor-rpmbuild/
-git checkout testing  # or stable, or your issue branch
+git checkout testing  # or 'master' branch (stable), or your issue specific branch
 ```
 For specific git branches re making/submitting back changes see the
 [Making changes](https://rockstor.com/docs/contribute/contribute.html#making-changes)
@@ -135,9 +135,9 @@ All official Rockstor packages, and their host repositories, are signed by the p
 As such a hand/custom-built package will have no signature.
 Options:
 1) The fix is to sign you RPM package.
-2) The workaround (reasonable for development testing) is to ignoe gpg checks via e.g.:
+2) The workaround (reasonable for development testing) is to ignore gpg checks via e.g.:
     ```shell
-    zypper --no-gpg-checks /usr/src/packages/RPMS/x86_64/rockstor-4.5.7-0.x86_64.rpm
+    zypper --no-gpg-checks install /usr/src/packages/RPMS/x86_64/rockstor-4.5.7-0.x86_64.rpm
     ```
 
 ### RPM relocation
