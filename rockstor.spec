@@ -44,9 +44,9 @@ BuildRequires: glib2-devel
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: make
-BuildRequires: postgresql13
-BuildRequires: postgresql13-server
-BuildRequires: postgresql13-server-devel
+BuildRequires: postgresql17
+BuildRequires: postgresql17-server
+BuildRequires: postgresql17-server-devel
 BuildRequires: password-store
 # Notes re Poetry for future consideration:
 # https://en.opensuse.org/openSUSE:Build_system_recipes#PEP517_style:
@@ -86,10 +86,11 @@ Requires: ntp
 Requires: at
 Requires: chrony
 Requires: firewalld
-Requires: postgresql13
-Requires: postgresql13-server
-Requires: postgresql13-server-devel
-Requires: postgresql13-contrib
+Requires: postgresql17
+Requires: postgresql17-devel
+Requires: postgresql17-server
+Requires: postgresql17-server-devel
+Requires: postgresql17-contrib
 Requires: rsync
 Requires: smartmontools
 Requires: hdparm
@@ -149,10 +150,11 @@ Requires: ntp
 Requires: at
 Requires: chrony
 Requires: firewalld
-Requires: postgresql13
-Requires: postgresql13-server
-Requires: postgresql13-server-devel
-Requires: postgresql13-contrib
+Requires: postgresql17
+Requires: postgresql17-devel
+Requires: postgresql17-server
+Requires: postgresql17-server-devel
+Requires: postgresql17-contrib
 Requires: rsync
 Requires: smartmontools
 Requires: hdparm
@@ -426,6 +428,9 @@ exit 0
 # If a system currently uses an older DB format, the associated binaries are assumed.
 # "10 13" prepares Leap 15.3 4.1.0-0 installs, dup'ed to 15.4 4.6.1-0, for > 5.0.5-0.
 %{prefix}/%{name}/src/rockstor/scripts/db_upgrade.sh 10 13
+# The above is assumed to have been run in a previous update - upto Stable 5.1.0
+# Preparing for Stable 5.6.0-0 & Django 5.2 LTS and SSE potential. Leap 15.6 onwards.
+%{prefix}/%{name}/src/rockstor/scripts/db_upgrade.sh 13 17
 #
 # Restore 'pre' scriptlet's config-backup-rpmsave files to static.
 if [ -d "%{prefix}/%{name}/config-backups-rpmsave" ]
