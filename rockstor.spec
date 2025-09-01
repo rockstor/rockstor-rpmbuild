@@ -364,9 +364,9 @@ fi
 # Enforce, via manual alternatives configuration, our target postgresql & pipx versions.
 # We do this on install & update to avoid base OS defaults exceeding our compatibility.
 # Compatibility concerns:
-# - Postgresql: Django's secondary dependency of psycopg which we pin.
+# - Postgresql: Django 5.2's primary dependency on > 13, and secondary dependency of psycopg which we pin.
 # - Pipx: We install and manage Poetry via OS supplied python3.##-pipx packages.
-update-alternatives --set postgresql /usr/lib/postgresql13
+update-alternatives --set postgresql /usr/lib/postgresql17
 update-alternatives --set pipx /usr/bin/pipx-3.11
 # enable/disable our units by default on package installation,
 # enforcing distribution, spin or administrator preset policy.
