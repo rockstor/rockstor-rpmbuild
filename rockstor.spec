@@ -121,6 +121,7 @@ Requires: gcc-c++
 Requires: make
 Requires: password-store
 Requires: hostname
+Requires: sudo
 %endif
 
 # TUMBLEWEED/Slowroll
@@ -185,6 +186,7 @@ Requires: gcc-c++
 Requires: make
 Requires: password-store
 Requires: hostname
+Requires: sudo
 %endif
 
 # rpm build notes (from man rpmbuild):
