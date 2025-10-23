@@ -258,6 +258,9 @@ touch %{buildroot}%{prefix}/rockstor/var/log/rockstor_systems_log_dir
 install -D -m 644 ./conf/rockstor-build.service %{buildroot}%{_unitdir}/%{name}-build.service
 install -D -m 644 ./conf/rockstor-pre.service %{buildroot}%{_unitdir}/%{name}-pre.service
 install -D -m 644 ./conf/rockstor.service %{buildroot}%{_unitdir}/%{name}.service
+install -D -m 644 ./conf/rockstor-collector.service %{buildroot}%{_unitdir}/%{name}-collector.service
+install -D -m 644 ./conf/rockstor-replication.service %{buildroot}%{_unitdir}/%{name}-replication.service
+install -D -m 644 ./conf/rockstor-scheduling.service %{buildroot}%{_unitdir}/%{name}-scheduling.service
 install -D -m 644 ./conf/rockstor-bootstrap.service %{buildroot}%{_unitdir}/%{name}-bootstrap.service
 # nginx override file
 mkdir -p %{buildroot}/etc/systemd/system/nginx.service.d
@@ -323,7 +326,7 @@ poetry run django-admin test
 # $1 == 2 is before an update
 #
 # Stop all main rockstor services, irrespective of origin.
-/usr/bin/systemctl stop rockstor-bootstrap.service rockstor.service rockstor-pre.service rockstor-build.service
+/usr/bin/systemctl stop rockstor-bootstrap.service rockstor-scheduling.service rockstor-replication.service rockstor-collector.service rockstor.service rockstor-pre.service rockstor-build.service
 #
 # Backup all static/config-backups contents; to be restored in posttrans scriptlet.
 if [ -d "%{prefix}/%{name}/static/config-backups" ]
@@ -347,7 +350,7 @@ rm --force --recursive %{prefix}/%{name}/eggs
 # https://en.opensuse.org/openSUSE:Systemd_packaging_guidelines#Unit_files
 # See: /usr/lib/rpm/macros.d/macros.systemd from systemd-rpm-macros
 # rpm --eval macro-name-here
-%service_add_pre rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_add_pre rockstor-build.service rockstor-pre.service rockstor.service rockstor-collector.service rockstor-replication.service rockstor-scheduling.service rockstor-bootstrap.service
 exit 0
 
 %post
@@ -373,7 +376,7 @@ update-alternatives --set pipx /usr/bin/pipx-3.11
 # enable/disable our units by default on package installation,
 # enforcing distribution, spin or administrator preset policy.
 # See: https://build.opensuse.org/package/show/home:rockstor:branches:Base:System/systemd-presets-branding-rockstor
-%service_add_post rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_add_post rockstor-build.service rockstor-pre.service rockstor.service rockstor-collector.service rockstor-replication.service rockstor-scheduling.service rockstor-bootstrap.service
 exit 0
 
 %preun
@@ -382,7 +385,7 @@ exit 0
 # $1 == 1 is before an update
 #
 # If uninstall, the following service macro disables and stops our services.
-%service_del_preun rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_del_preun rockstor-build.service rockstor-pre.service rockstor.service rockstor-collector.service rockstor-replication.service rockstor-scheduling.service rockstor-bootstrap.service
 exit 0
 
 %postun
@@ -394,7 +397,7 @@ exit 0
 
 # If units are not to be restarted, use % service_del_postun_without_restart
 # On uninstall the following service macro deletes our services, then does a 'systemctl daemon-reload'
-%service_del_postun_without_restart rockstor-build.service rockstor-pre.service rockstor.service rockstor-bootstrap.service
+%service_del_postun_without_restart rockstor-build.service rockstor-pre.service rockstor.service rockstor-collector.service rockstor-replication.service rockstor-scheduling.service rockstor-bootstrap.service
 
 # Post uninstall we need to restart the nginx service as we removed our nginx override file.
 if [ "$1" = "0" ]; then  # uninstall so clean up build.sh generated files and other dynamic files.
