@@ -124,10 +124,73 @@ Requires: hostname
 Requires: sudo
 %endif
 
+# openSUSE Leap 16.0
+%if 0%{?suse_version} == 1600
+BuildRequires: python313
+BuildRequires: python313-devel
+BuildRequires: python313-pipx
+Requires: python313
+Requires: python313-devel
+Requires: python313-pipx
+Requires: python313-rpm
+Requires: NetworkManager
+Requires: nginx
+Requires: btrfsprogs
+Requires: nfs-kernel-server
+Requires: nfs-client
+Requires: samba
+Requires: samba-winbind
+Requires: ypbind
+Requires: rpcbind
+Requires: realmd
+Requires: realmd-lang
+Requires: krb5-client
+Requires: ntp
+Requires: at
+Requires: chrony
+Requires: firewalld
+Requires: postgresql17
+Requires: postgresql17-devel
+Requires: postgresql17-server
+Requires: postgresql17-server-devel
+Requires: postgresql17-contrib
+Requires: rsync
+Requires: smartmontools
+Requires: hdparm
+Requires: postfix
+Requires: cyrus-sasl-plain
+Requires: nano
+Requires: nut
+Requires: nut-drivers-net
+Requires: net-snmp
+Requires: docker
+Requires: cryptsetup
+Requires: python3-python-dateutil
+Requires: which
+# Requires: shellinabox  # OBS issue re "Nothing provides check-create-certificate"
+Requires: avahi
+Requires: cronie
+Requires: sssd
+Requires: sssd-tools
+Requires: sssd-ad
+Requires: sssd-ldap
+Requires: sssd-dbus
+Requires: libzmq5
+Requires: dbus-1-devel
+Requires: glib2-devel
+Requires: haveged
+Requires: gcc
+Requires: gcc-c++
+Requires: make
+Requires: password-store
+Requires: hostname
+Requires: sudo
+%endif
+
 # TUMBLEWEED/Slowroll
-# Tumbleweed as of Nov 2022:
+# As of Oct 2025:
 # Version unreliable as changes over time !
-%if 0%{?suse_version} >= 1599
+%if 0%{?suse_version} > 1600
 BuildRequires: python311
 BuildRequires: python311-devel
 BuildRequires: python311-pipx
