@@ -122,6 +122,7 @@ Requires: make
 Requires: password-store
 Requires: hostname
 Requires: sudo
+Requires: whois
 %endif
 
 # openSUSE Leap 16.0
@@ -185,6 +186,7 @@ Requires: make
 Requires: password-store
 Requires: hostname
 Requires: sudo
+Requires: whois
 %endif
 
 # TUMBLEWEED/Slowroll
@@ -250,6 +252,7 @@ Requires: make
 Requires: password-store
 Requires: hostname
 Requires: sudo
+Requires: whois
 %endif
 
 # rpm build notes (from man rpmbuild):
