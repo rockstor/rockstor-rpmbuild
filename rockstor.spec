@@ -48,6 +48,7 @@ BuildRequires: postgresql17
 BuildRequires: postgresql17-server
 BuildRequires: postgresql17-server-devel
 BuildRequires: password-store
+BuildRequires: rpm-build
 # Notes re Poetry for future consideration:
 # https://en.opensuse.org/openSUSE:Build_system_recipes#PEP517_style:
 # https://github.com/openSUSE/python-rpm-macros/blob/79041e9986dd5427d0bc1f66936092ddfe04533b/README.md#install-macros
@@ -66,6 +67,7 @@ BuildRequires: password-store
 BuildRequires: python311
 BuildRequires: python311-devel
 BuildRequires: python311-pipx
+BuildRequires: python311-rpm
 Requires: python311
 Requires: python311-devel
 Requires: python311-pipx
@@ -130,6 +132,7 @@ Requires: whois
 BuildRequires: python313
 BuildRequires: python313-devel
 BuildRequires: python313-pipx
+BuildRequires: python313-rpm
 Requires: python313
 Requires: python313-devel
 Requires: python313-pipx
@@ -196,6 +199,7 @@ Requires: whois
 BuildRequires: python311
 BuildRequires: python311-devel
 BuildRequires: python311-pipx
+BuildRequires: python311-rpm
 Requires: python311
 Requires: python311-devel
 Requires: python311-pipx
