@@ -125,6 +125,7 @@ Requires: password-store
 Requires: hostname
 Requires: sudo
 Requires: whois
+Requires: device-mapper
 %endif
 
 # openSUSE Leap 16.0
@@ -190,6 +191,7 @@ Requires: password-store
 Requires: hostname
 Requires: sudo
 Requires: whois
+Requires: device-mapper
 %endif
 
 # TUMBLEWEED/Slowroll
@@ -257,6 +259,7 @@ Requires: password-store
 Requires: hostname
 Requires: sudo
 Requires: whois
+Requires: device-mapper
 %endif
 
 # rpm build notes (from man rpmbuild):
