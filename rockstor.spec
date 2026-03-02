@@ -134,10 +134,12 @@ BuildRequires: python313
 BuildRequires: python313-devel
 BuildRequires: python313-pipx
 BuildRequires: python313-rpm
+BuildRequires: clang
 Requires: python313
 Requires: python313-devel
 Requires: python313-pipx
 Requires: python313-rpm
+Requires: clang
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
