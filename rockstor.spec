@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.1.0
+Version: 5.5.0
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.1.0
+%define jslibs_version 5.5.0
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -526,6 +526,37 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri Mar 20 2026 The Rockstor Project <support@rockstor.com> - 5.5.0-0
+-WARNING -- RENEWED TESTING PHASE 5.5.0-0 -- (DEVELOPERS ONLY) #3001 @phillxnet 
+-Reference emerging Rock-on norms re Share (owner:group) etc #3074 @phillxnet 
+-Ignore spurious error when setting APM #3075 @tjkirch 
+-Move Share chown chmod operations to the scheduler #3058 @phillxnet 
+-Update psutils #3085 @phillxnet 
+-Update dbus-python to at least 1.4.0 + routine updates #3082 @phillxnet 
+-Pool import not reflecting owner:group, perms, and compression #3073 @phillxnet 
+-Add gid element to Rockons definition #3029 @phillxnet 
+-Update postfix config re deprecations #2977 @phillxnet 
+-Insufficient timeout on zypper list-updates call #3032 @phillxnet 
+-Multiple gpg-agent & scdaemon instances lingering #3026 @phillxnet 
+-Regression re rockstor-replication.service enable #3045 @phillxnet 
+-Update Django to latest 5.2 LTS #3021 @phillxnet 
+-Python version 3.13 does not have module distutils.util #3054 @phillxnet 
+-Py3.11 crypt library will be deprecated #2572 @phillxnet 
+-Update Django Rest Framework plus incidentals #3049 @phillxnet 
+-Update django-pipeline #3047 @phillxnet 
+-smart  for nvme drives #3013 @delboy711 
+-SMB Admin user 3 char minimum validator #3041 @tsx4k 
+-Upgrade to latest stable Poetry 2.2 + routine updates #3030 @phillxnet 
+-Moving remaining services from supervisor to systemd #2650 @Hooverdan96 
+-Legacy postgresql 13 devel packages blocking update #3020 @phillxnet 
+-Upgrade to latest stable Poetry #2806 @phillxnet 
+-Routine update of dependencies #3022 @phillxnet 
+-Ensure DB format upgrade script uses target pg_upgrade #3018 @phillxnet 
+-Unused dependency declared - urlobject #3003 @phillxnet 
+-Suppress creation of visible snapshot NFS exports #2170 @delboy711 
+-Add Django debug toolbar #2939 @FroggyFlox 
+-Fix rockstor-bootstrap timeout fail on slower hardware #3005 @hberntsen 
+-Delete snapshot NFS exports prior to deleting share exports #2995 @delboy711 
 * Thu May 29 2025 The Rockstor Project <support@rockstor.com> - 5.1.0-0
 -Bump version to a 5.1.0 base #2967 @phillxnet 
 -Routine update of dependencies after DRF pinning #2990 @phillxnet @FroggyFlox 
