@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.5.0
+Version: 5.5.1
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.5.0
+%define jslibs_version 5.5.1
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -526,6 +526,13 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Wed Apr 22 2026 The Rockstor Project <support@rockstor.com> - 5.5.1-0
+-Bump version to a 5.5.1 base #3105 @phillxnet 
+-Replace deprecated utc timezone related artifacts #3102 @Hooverdan96 
+-"Quotas Disabled" loop - unhandled "rescan is running" #3098 @mzyy94 
+-Adapt to our fiscal host's legacy tier removal #3101 @phillxnet @FroggyFlox 
+-Add 'edge' repo tier #3094 @phillxnet @FroggyFlox 
+-Upgrade to latest stable Poetry + routine updates #3088 @phillxnet 
 * Fri Mar 20 2026 The Rockstor Project <support@rockstor.com> - 5.5.0-0
 -WARNING -- RENEWED TESTING PHASE 5.5.0-0 -- (DEVELOPERS ONLY) #3001 @phillxnet 
 -Reference emerging Rock-on norms re Share (owner:group) etc #3074 @phillxnet 
