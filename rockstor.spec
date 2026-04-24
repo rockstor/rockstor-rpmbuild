@@ -126,6 +126,7 @@ Requires: hostname
 Requires: sudo
 Requires: whois
 Requires: device-mapper
+Requires: lsb-release
 %endif
 
 # openSUSE Leap 16.0
@@ -192,6 +193,7 @@ Requires: hostname
 Requires: sudo
 Requires: whois
 Requires: device-mapper
+Requires: lsb-release
 %endif
 
 # TUMBLEWEED/Slowroll
@@ -260,6 +262,7 @@ Requires: hostname
 Requires: sudo
 Requires: whois
 Requires: device-mapper
+Requires: lsb-release
 %endif
 
 # rpm build notes (from man rpmbuild):
