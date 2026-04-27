@@ -146,7 +146,7 @@ Requires: nfs-kernel-server
 Requires: nfs-client
 Requires: samba
 Requires: samba-winbind
-Requires: ypbind
+# Requires: ypbind  # No longer available.
 Requires: rpcbind
 Requires: realmd
 Requires: realmd-lang
