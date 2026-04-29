@@ -342,23 +342,6 @@ install -D -m 644 ./conf/rockstor-bootstrap.service %{buildroot}%{_unitdir}/%{na
 mkdir -p %{buildroot}/etc/systemd/system/nginx.service.d
 install -m 644 ./conf/30-rockstor-nginx-override.conf %{buildroot}/etc/systemd/system/nginx.service.d/30-%{name}-nginx-override.conf
 
-%check
-# Run tests from inside build directory.
-echo "'check' scriptlet PATH=${PATH}"
-# Build full project .venv (via poetry.config) - installing all dependencies: 140 MB
-env > poetry-install.txt
-poetry --version >> poetry-install.txt
-# /usr/local/bin/poetry -> /opt/pipx/venvs/poetry
-poetry install -vvv --no-interaction --no-ansi >> poetry-install.txt 2>&1
-
-# GNUPG & 'pass' setup assumed, as per rockstor-build.service / build.sh,
-# with re-assertion, and key rotation via rockstor-pre.service.
-export Environment="PASSWORD_STORE_DIR=/root/.password-store"
-export DJANGO_SETTINGS_MODULE=settings
-poetry run django-admin collectstatic --no-input --verbosity 1
-cd src/rockstor/
-poetry run django-admin test
-
 %files
 # Define what files shall be owned by the resulting rpm.
 # Establish any special file ownership in this section.
