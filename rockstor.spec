@@ -200,14 +200,14 @@ Requires: lsb-release
 # As of Oct 2025:
 # Version unreliable as changes over time !
 %if 0%{?suse_version} > 1600
-BuildRequires: python311
-BuildRequires: python311-devel
-BuildRequires: python311-pipx
-BuildRequires: python311-rpm
-Requires: python311
-Requires: python311-devel
-Requires: python311-pipx
-Requires: python311-rpm
+BuildRequires: python313
+BuildRequires: python313-devel
+BuildRequires: python313-pipx
+BuildRequires: python313-rpm
+Requires: python313
+Requires: python313-devel
+Requires: python313-pipx
+Requires: python313-rpm
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
