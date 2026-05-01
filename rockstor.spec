@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.5.1
+Version: 5.5.2
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.5.1
+%define jslibs_version 5.5.2
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -512,6 +512,12 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri May 01 2026 The Rockstor Project <support@rockstor.com> - 5.5.2-0
+-Use Poetry managed standalone python #3081 @phillxnet @FroggyFlox 
+-Fix remaining utc treatment #3111 @Hooverdan96 
+-Upgrade to latest stable Poetry #3112 @phillxnet 
+-build.sh errors - standalone use #3107 @phillxnet @Hooverdan96 
+-Update Django Rest Framework plus incidentals #3095 @phillxnet @FroggyFlox 
 * Wed Apr 22 2026 The Rockstor Project <support@rockstor.com> - 5.5.1-0
 -Bump version to a 5.5.1 base #3105 @phillxnet 
 -Replace deprecated utc timezone related artifacts #3102 @Hooverdan96 
