@@ -1,6 +1,6 @@
 Name: rockstor
 Version: 5.5.2
-Release: 0
+Release: 1
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
@@ -512,6 +512,8 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri May 01 2026 The Rockstor Project <support@rockstor.com> - 5.5.2-1
+-Bump version to a 5.5.2 base - release 1 #3120 @phillxnet 
 * Fri May 01 2026 The Rockstor Project <support@rockstor.com> - 5.5.2-0
 -Use Poetry managed standalone python #3081 @phillxnet @FroggyFlox 
 -Fix remaining utc treatment #3111 @Hooverdan96 
