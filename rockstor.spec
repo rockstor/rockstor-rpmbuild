@@ -514,76 +514,76 @@ exit 0
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
 * Sat May 09 2026 The Rockstor Project <support@rockstor.com> - 5.5.3-0
--Bump version to a 5.5.3 base #3126 @phillxnet 
--PyPi rpm shim needs fallback python3-rpm on Leap 15.6 #3125 @FroggyFlox @Hooverdan96 @phillxnet 
--Drop support for NIS #2947 @phillxnet 
--Py3.13 SyntaxWarning in intended raw test strings #2684 @phillxnet 
+-Bump version to a 5.5.3 base #3126 @phillxnet
+-PyPi rpm shim needs fallback python3-rpm on Leap 15.6 #3125 @FroggyFlox @Hooverdan96 @phillxnet
+-Drop support for NIS #2947 @phillxnet
+-Py3.13 SyntaxWarning in intended raw test strings #2684 @phillxnet
 * Fri May 01 2026 The Rockstor Project <support@rockstor.com> - 5.5.2-1
--Bump version to a 5.5.2 base - release 1 #3120 @phillxnet 
+-Bump version to a 5.5.2 base - release 1 #3120 @phillxnet
 * Fri May 01 2026 The Rockstor Project <support@rockstor.com> - 5.5.2-0
--Use Poetry managed standalone python #3081 @phillxnet @FroggyFlox 
--Fix remaining utc treatment #3111 @Hooverdan96 
--Upgrade to latest stable Poetry #3112 @phillxnet 
--build.sh errors - standalone use #3107 @phillxnet @Hooverdan96 
--Update Django Rest Framework plus incidentals #3095 @phillxnet @FroggyFlox 
+-Use Poetry managed standalone python #3081 @phillxnet @FroggyFlox
+-Fix remaining utc treatment #3111 @Hooverdan96
+-Upgrade to latest stable Poetry #3112 @phillxnet
+-build.sh errors - standalone use #3107 @phillxnet @Hooverdan96
+-Update Django Rest Framework plus incidentals #3095 @phillxnet @FroggyFlox
 * Wed Apr 22 2026 The Rockstor Project <support@rockstor.com> - 5.5.1-0
--Bump version to a 5.5.1 base #3105 @phillxnet 
--Replace deprecated utc timezone related artifacts #3102 @Hooverdan96 
--"Quotas Disabled" loop - unhandled "rescan is running" #3098 @mzyy94 
--Adapt to our fiscal host's legacy tier removal #3101 @phillxnet @FroggyFlox 
--Add 'edge' repo tier #3094 @phillxnet @FroggyFlox 
--Upgrade to latest stable Poetry + routine updates #3088 @phillxnet 
+-Bump version to a 5.5.1 base #3105 @phillxnet
+-Replace deprecated utc timezone related artifacts #3102 @Hooverdan96
+-"Quotas Disabled" loop - unhandled "rescan is running" #3098 @mzyy94
+-Adapt to our fiscal host's legacy tier removal #3101 @phillxnet @FroggyFlox
+-Add 'edge' repo tier #3094 @phillxnet @FroggyFlox
+-Upgrade to latest stable Poetry + routine updates #3088 @phillxnet
 * Fri Mar 20 2026 The Rockstor Project <support@rockstor.com> - 5.5.0-0
--WARNING -- RENEWED TESTING PHASE 5.5.0-0 -- (DEVELOPERS ONLY) #3001 @phillxnet 
--Reference emerging Rock-on norms re Share (owner:group) etc #3074 @phillxnet 
--Ignore spurious error when setting APM #3075 @tjkirch 
--Move Share chown chmod operations to the scheduler #3058 @phillxnet 
--Update psutils #3085 @phillxnet 
--Update dbus-python to at least 1.4.0 + routine updates #3082 @phillxnet 
--Pool import not reflecting owner:group, perms, and compression #3073 @phillxnet 
--Add gid element to Rockons definition #3029 @phillxnet 
--Update postfix config re deprecations #2977 @phillxnet 
--Insufficient timeout on zypper list-updates call #3032 @phillxnet 
--Multiple gpg-agent & scdaemon instances lingering #3026 @phillxnet 
--Regression re rockstor-replication.service enable #3045 @phillxnet 
--Update Django to latest 5.2 LTS #3021 @phillxnet 
--Python version 3.13 does not have module distutils.util #3054 @phillxnet 
--Py3.11 crypt library will be deprecated #2572 @phillxnet 
--Update Django Rest Framework plus incidentals #3049 @phillxnet 
--Update django-pipeline #3047 @phillxnet 
--smart  for nvme drives #3013 @delboy711 
--SMB Admin user 3 char minimum validator #3041 @tsx4k 
--Upgrade to latest stable Poetry 2.2 + routine updates #3030 @phillxnet 
--Moving remaining services from supervisor to systemd #2650 @Hooverdan96 
--Legacy postgresql 13 devel packages blocking update #3020 @phillxnet 
--Upgrade to latest stable Poetry #2806 @phillxnet 
--Routine update of dependencies #3022 @phillxnet 
--Ensure DB format upgrade script uses target pg_upgrade #3018 @phillxnet 
--Unused dependency declared - urlobject #3003 @phillxnet 
--Suppress creation of visible snapshot NFS exports #2170 @delboy711 
--Add Django debug toolbar #2939 @FroggyFlox 
--Fix rockstor-bootstrap timeout fail on slower hardware #3005 @hberntsen 
--Delete snapshot NFS exports prior to deleting share exports #2995 @delboy711 
+-WARNING -- RENEWED TESTING PHASE 5.5.0-0 -- (DEVELOPERS ONLY) #3001 @phillxnet
+-Reference emerging Rock-on norms re Share (owner:group) etc #3074 @phillxnet
+-Ignore spurious error when setting APM #3075 @tjkirch
+-Move Share chown chmod operations to the scheduler #3058 @phillxnet
+-Update psutils #3085 @phillxnet
+-Update dbus-python to at least 1.4.0 + routine updates #3082 @phillxnet
+-Pool import not reflecting owner:group, perms, and compression #3073 @phillxnet
+-Add gid element to Rockons definition #3029 @phillxnet
+-Update postfix config re deprecations #2977 @phillxnet
+-Insufficient timeout on zypper list-updates call #3032 @phillxnet
+-Multiple gpg-agent & scdaemon instances lingering #3026 @phillxnet
+-Regression re rockstor-replication.service enable #3045 @phillxnet
+-Update Django to latest 5.2 LTS #3021 @phillxnet
+-Python version 3.13 does not have module distutils.util #3054 @phillxnet
+-Py3.11 crypt library will be deprecated #2572 @phillxnet
+-Update Django Rest Framework plus incidentals #3049 @phillxnet
+-Update django-pipeline #3047 @phillxnet
+-smart  for nvme drives #3013 @delboy711
+-SMB Admin user 3 char minimum validator #3041 @tsx4k
+-Upgrade to latest stable Poetry 2.2 + routine updates #3030 @phillxnet
+-Moving remaining services from supervisor to systemd #2650 @Hooverdan96
+-Legacy postgresql 13 devel packages blocking update #3020 @phillxnet
+-Upgrade to latest stable Poetry #2806 @phillxnet
+-Routine update of dependencies #3022 @phillxnet
+-Ensure DB format upgrade script uses target pg_upgrade #3018 @phillxnet
+-Unused dependency declared - urlobject #3003 @phillxnet
+-Suppress creation of visible snapshot NFS exports #2170 @delboy711
+-Add Django debug toolbar #2939 @FroggyFlox
+-Fix rockstor-bootstrap timeout fail on slower hardware #3005 @hberntsen
+-Delete snapshot NFS exports prior to deleting share exports #2995 @delboy711
 * Thu May 29 2025 The Rockstor Project <support@rockstor.com> - 5.1.0-0
--Bump version to a 5.1.0 base #2967 @phillxnet 
--Routine update of dependencies after DRF pinning #2990 @phillxnet @FroggyFlox 
--Tumbleweed-Slowroll - UserTests valid_pubkey no longer valid #2992 @phillxnet @FroggyFlox 
--Erase prior GPG key from rpm #2988 @phillxnet @FroggyFlox 
--Update public GPG key #2986 @phillxnet @FroggyFlox @Hooverdan96 
--Web UI delay/timeout while waiting on yum changelog #2286 @phillxnet 
--Web UI delay/timeout while waiting on yum info installed #2285 @phillxnet 
--non-zero code(7) returned by zypper when rapidly refreshing #2485 @phillxnet 
--Available and installed pkg versions not shown #2984 @phillxnet 
--UnboundLocalError: cannot access local variable 'appliance' #2983 @phillxnet 
--Remove dnf-yum use #2979 @phillxnet 
--Adapt to Slowroll os-release #2971 @phillxnet 
--Remove defunct dead-code associated SystemTap artifacts #2965 @phillxnet 
--Re-establish Django admin interface #2891 @phillxnet 
--User Pincard generation fails #2958 @phillxnet @FroggyFlox 
--Normalise menu capitalisation #2960 @Hooverdan96 
--SMB config for TimeMachine has typo #2952 @simon-77 
--Routine update of dependencies - plus add docutils #2949 @phillxnet 
--Swap order of newVolumes representation in summary table #2933 @FroggyFlox 
+-Bump version to a 5.1.0 base #2967 @phillxnet
+-Routine update of dependencies after DRF pinning #2990 @phillxnet @FroggyFlox
+-Tumbleweed-Slowroll - UserTests valid_pubkey no longer valid #2992 @phillxnet @FroggyFlox
+-Erase prior GPG key from rpm #2988 @phillxnet @FroggyFlox
+-Update public GPG key #2986 @phillxnet @FroggyFlox @Hooverdan96
+-Web UI delay/timeout while waiting on yum changelog #2286 @phillxnet
+-Web UI delay/timeout while waiting on yum info installed #2285 @phillxnet
+-non-zero code(7) returned by zypper when rapidly refreshing #2485 @phillxnet
+-Available and installed pkg versions not shown #2984 @phillxnet
+-UnboundLocalError: cannot access local variable 'appliance' #2983 @phillxnet
+-Remove dnf-yum use #2979 @phillxnet
+-Adapt to Slowroll os-release #2971 @phillxnet
+-Remove defunct dead-code associated SystemTap artifacts #2965 @phillxnet
+-Re-establish Django admin interface #2891 @phillxnet
+-User Pincard generation fails #2958 @phillxnet @FroggyFlox
+-Normalise menu capitalisation #2960 @Hooverdan96
+-SMB config for TimeMachine has typo #2952 @simon-77
+-Routine update of dependencies - plus add docutils #2949 @phillxnet
+-Swap order of newVolumes representation in summary table #2933 @FroggyFlox
 * Tue Nov 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.15-0
 -Bump version to a 5.0.15 base - testing branch #2930 @phillxnet
 -Remove obsolete browser compatibility - html5shim #2920 @phillxnet @Hooverdan96
@@ -598,138 +598,138 @@ exit 0
 -Use pyproject.toml's 'version' in build.sh #2895 @phillxnet
 -Update email domain, co-maintainer, etc in pyproject.toml #2889 @phillxnet @FroggyFlox
 * Tue Aug 27 2024 The Rockstor Project <support@rockstor.com> - 5.0.14-0
--Bump versions to a 5.0.14 base - testing branch #2894 @phillxnet 
--Routine update of dependencies #2897 @phillxnet 
--Update Copyright notices #2883 @phillxnet @FroggyFlox @schakrava @Hooverdan96 
--Rock-on install wizard obfuscates share container info #2886 @phillxnet 
--Rockons: Invalid environment variable (...) #1588 @phillxnet @anatox @daniel-illi @FroggyFlox 
--Block creation of system reserved Share names #2881 @phillxnet 
--Disk activity widget inactive - Tumbleweed #2844 @phillxnet @Hooverdan96 @FroggyFlox 
--Pi4 fails on reboot #2843 @phillxnet 
+-Bump versions to a 5.0.14 base - testing branch #2894 @phillxnet
+-Routine update of dependencies #2897 @phillxnet
+-Update Copyright notices #2883 @phillxnet @FroggyFlox @schakrava @Hooverdan96
+-Rock-on install wizard obfuscates share container info #2886 @phillxnet
+-Rockons: Invalid environment variable (...) #1588 @phillxnet @anatox @daniel-illi @FroggyFlox
+-Block creation of system reserved Share names #2881 @phillxnet
+-Disk activity widget inactive - Tumbleweed #2844 @phillxnet @Hooverdan96 @FroggyFlox
+-Pi4 fails on reboot #2843 @phillxnet
 * Wed Jul 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.13-0
--Bump versions to a 5.0.13 base - testing branch #2877 @phillxnet 
--Routine update of dependencies #2875 @phillxnet 
--Quota file exists error on Share resize #2854 @phillxnet 
--Scrub status "unknown" - Leap 15.6 OS base #2872 @phillxnet @FroggyFlox @Hooverdan96 
+-Bump versions to a 5.0.13 base - testing branch #2877 @phillxnet
+-Routine update of dependencies #2875 @phillxnet
+-Quota file exists error on Share resize #2854 @phillxnet
+-Scrub status "unknown" - Leap 15.6 OS base #2872 @phillxnet @FroggyFlox @Hooverdan96
 * Thu Jul 11 2024 The Rockstor Project <support@rockstor.com> - 5.0.12-0
--Bump versions to a 5.0.12 base - testing branch #2870 @phillxnet 
--Routine update of dependencies #2868 @phillxnet 
--[t] Indicate Tailscale install requirement #2845 @phillxnet @FroggyFlox 
--revise restricted system usernames #2634  @phillxnet @Hooverdan96 
--SFTP user chroot shell path update & ls addition #2863 @phillxnet 
--Config restore: samba share exports not consistently restored #2847 @Hooverdan96 @FroggyFlox @phillxnet 
+-Bump versions to a 5.0.12 base - testing branch #2870 @phillxnet
+-Routine update of dependencies #2868 @phillxnet
+-[t] Indicate Tailscale install requirement #2845 @phillxnet @FroggyFlox
+-revise restricted system usernames #2634  @phillxnet @Hooverdan96
+-SFTP user chroot shell path update & ls addition #2863 @phillxnet
+-Config restore: samba share exports not consistently restored #2847 @Hooverdan96 @FroggyFlox @phillxnet
 * Wed Jul 03 2024 The Rockstor Project <support@rockstor.com> - 5.0.11-0
--Bump versions to a 5.0.11 base - testing branch #2859 @phillxnet 
--Routine update of dependencies #2861 @phillxnet 
--Leap 15.6: SFTP share error - library paths changed #2856 @Hooverdan96 @phillxnet @FroggyFlox  
--5.0.9-0 & 5.0.10-0 lsblk whitespace only values - not enough values to unpack #2853 @phillxnet 
+-Bump versions to a 5.0.11 base - testing branch #2859 @phillxnet
+-Routine update of dependencies #2861 @phillxnet
+-Leap 15.6: SFTP share error - library paths changed #2856 @Hooverdan96 @phillxnet @FroggyFlox
+-5.0.9-0 & 5.0.10-0 lsblk whitespace only values - not enough values to unpack #2853 @phillxnet
 * Mon Jun 17 2024 The Rockstor Project <support@rockstor.com> - 5.0.10-0
--Bump versions to a 5.0.10 base - testing branch #2848 @phillxnet 
--Routine update of dependencies #2849 @phillxnet 
--5.0.6-0 to 5.0.9-0 Configuration Backup file upload fails #2846 @Hooverdan96 @FroggyFlox @phillxnet 
+-Bump versions to a 5.0.10 base - testing branch #2848 @phillxnet
+-Routine update of dependencies #2849 @phillxnet
+-5.0.6-0 to 5.0.9-0 Configuration Backup file upload fails #2846 @Hooverdan96 @FroggyFlox @phillxnet
 * Fri Apr 19 2024 The Rockstor Project <support@rockstor.com> - 5.0.9-0
--Bump versions to a 5.0.9 base - testing branch #2837 @phillxnet @FroggyFlox 
--DRF, Django LTS, and Gunicorn maintenance updates #2820 @phillxnet @FroggyFlox 
--Un special-case system drive btrfs-in-partition treatment #2824 @phillxnet 
--Unit test improvements re Disk miss-attribution to ROOT pool #2828 @phillxnet 
--Modernise scan_disks() - no functional change intended #2826 @phillxnet 
--Adapt net interface delete to 'rockstor' service null config #2819 @phillxnet 
--Change Quota Status Display Wording #2810 @Hooverdan96 
--TypeError when deleting unused Rocknet #2814 @phillxnet @FroggyFlox 
--[t] Add Group with custom GID fails with type error #2807 @phillxnet @Hooverdan96 
--Scheduled shutdown task fails due to type issue #2805 @phillxnet @Hooverdan96 
--Replace raw_input() with input() #2803 @Hooverdan96 
+-Bump versions to a 5.0.9 base - testing branch #2837 @phillxnet @FroggyFlox
+-DRF, Django LTS, and Gunicorn maintenance updates #2820 @phillxnet @FroggyFlox
+-Un special-case system drive btrfs-in-partition treatment #2824 @phillxnet
+-Unit test improvements re Disk miss-attribution to ROOT pool #2828 @phillxnet
+-Modernise scan_disks() - no functional change intended #2826 @phillxnet
+-Adapt net interface delete to 'rockstor' service null config #2819 @phillxnet
+-Change Quota Status Display Wording #2810 @Hooverdan96
+-TypeError when deleting unused Rocknet #2814 @phillxnet @FroggyFlox
+-[t] Add Group with custom GID fails with type error #2807 @phillxnet @Hooverdan96
+-Scheduled shutdown task fails due to type issue #2805 @phillxnet @Hooverdan96
+-Replace raw_input() with input() #2803 @Hooverdan96
 * Mon Feb 12 2024 The Rockstor Project <support@rockstor.com> - 5.0.8-0
--Bump versions to a 5.0.8 base - testing branch #2800 @phillxnet 
--(t) Samba shares not accessible - 5.0.6-0 & 5.0.7-0 #2794 @phillxnet @FroggyFlox @Hooverdan96 
--Add rockstor-build systemd service #2793 @phillxnet 
+-Bump versions to a 5.0.8 base - testing branch #2800 @phillxnet
+-(t) Samba shares not accessible - 5.0.6-0 & 5.0.7-0 #2794 @phillxnet @FroggyFlox @Hooverdan96
+-Add rockstor-build systemd service #2793 @phillxnet
 * Mon Jan 29 2024 The Rockstor Project <support@rockstor.com> - 5.0.7-0
--Bump versions to a 5.0.7 base - testing branch #2791 @phillxnet 
--Failure to re-create venv - pre 5.0.3-0 updating to 5.0.6-0 rpm #2788 @phillxnet 
--Establish Postgres database format upgrade #2780 @phillxnet 
--Failure to remove legacy poetry version in 5.0.6-0 rpm #2782 @phillxnet 
+-Bump versions to a 5.0.7 base - testing branch #2791 @phillxnet
+-Failure to re-create venv - pre 5.0.3-0 updating to 5.0.6-0 rpm #2788 @phillxnet
+-Establish Postgres database format upgrade #2780 @phillxnet
+-Failure to remove legacy poetry version in 5.0.6-0 rpm #2782 @phillxnet
 * Tue Jan 16 2024 The Rockstor Project <support@rockstor.com> - 5.0.6-0
--Bump versions to a 5.0.6 base (Testing) - testing branch #2778 @phillxnet 
--(t) replication spawn error #2766 @phillxnet 
--Account for eventual double slahes in the conversion from legacy to poetry paths #2757 @FroggyFlox 
--Replication secret encrypted in Web-UI #2759 @phillxnet 
--Make explicit to systemd our NetworkManager dependency #2685 @phillxnet 
--Adopt dedicated secrets management library #2728 @phillxnet 
--Add/Update help icon linking to docs #2720 @FroggyFlox 
+-Bump versions to a 5.0.6 base (Testing) - testing branch #2778 @phillxnet
+-(t) replication spawn error #2766 @phillxnet
+-Account for eventual double slahes in the conversion from legacy to poetry paths #2757 @FroggyFlox
+-Replication secret encrypted in Web-UI #2759 @phillxnet
+-Make explicit to systemd our NetworkManager dependency #2685 @phillxnet
+-Adopt dedicated secrets management library #2728 @phillxnet
+-Add/Update help icon linking to docs #2720 @FroggyFlox
 -Update Poetry build system & normalise on Python 3.11 #2703 @phillxnet @FroggyFlox
--update to latest psycopg 3 #2740 @phillxnet 
--Update Django to latest 4.2 LTS #2750 @phillxnet @Hooverdan96 @FroggyFlox 
--Update pyzmq dependency to latest #2746 @phillxnet 
--Update dbus python dependency to latest #2744 @phillxnet 
--Update Django-rest-framework to latest #2738 @phillxnet 
--Update Huey task queue library #2731 @phillxnet 
--Update Django to next LTS #2734 @phillxnet 
--Ease database diagnosis via local IP access configuration #2730 @phillxnet 
--Update django-oauth-toolkit #2710 @phillxnet 
--Address redundancy re database setup #2729 @phillxnet 
--SyntaxWarning: "is not" with a literal #2713 @phillxnet 
--Use regular expressions to validate tailscale hostname #2714 @FroggyFlox @Hooverdan96 
--Fix mocking insufficiencies in system.network.py #2717 @FroggyFlox 
+-update to latest psycopg 3 #2740 @phillxnet
+-Update Django to latest 4.2 LTS #2750 @phillxnet @Hooverdan96 @FroggyFlox
+-Update pyzmq dependency to latest #2746 @phillxnet
+-Update dbus python dependency to latest #2744 @phillxnet
+-Update Django-rest-framework to latest #2738 @phillxnet
+-Update Huey task queue library #2731 @phillxnet
+-Update Django to next LTS #2734 @phillxnet
+-Ease database diagnosis via local IP access configuration #2730 @phillxnet
+-Update django-oauth-toolkit #2710 @phillxnet
+-Address redundancy re database setup #2729 @phillxnet
+-SyntaxWarning: "is not" with a literal #2713 @phillxnet
+-Use regular expressions to validate tailscale hostname #2714 @FroggyFlox @Hooverdan96
+-Fix mocking insufficiencies in system.network.py #2717 @FroggyFlox
 * Thu Oct 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.5-0
--Bump versions to a 5.0.5 base (Testing) - testing branch #2715 @phillxnet 
--Implement Tailscale service #2679 @FroggyFlox 
--remove django-braces dependency #2709 @phillxnet 
--Use single https session to retrieve all rock-on definitions #2707 @phillxnet 
--Update gunicorn to latest - use gthread - discrete config file #2702 @phillxnet 
--Update Requests library to latest #2704 @phillxnet 
+-Bump versions to a 5.0.5 base (Testing) - testing branch #2715 @phillxnet
+-Implement Tailscale service #2679 @FroggyFlox
+-remove django-braces dependency #2709 @phillxnet
+-Use single https session to retrieve all rock-on definitions #2707 @phillxnet
+-Update gunicorn to latest - use gthread - discrete config file #2702 @phillxnet
+-Update Requests library to latest #2704 @phillxnet
 -Update python-socketio & python-engineio to latest #2591 @phillxnet @Hooverdan96 
--Update Django REST Framework within Django version constraint #2695 @phillxnet 
--Update django-pipeline to latest #2689 @phillxnet 
--Update Python dependency to 3.9 #2691 @phillxnet 
--Provisional Django 2.2 LTS update #2625 @phillxnet 
--Add PyCharm rock-tests run config #2686 @phillxnet 
--Don't throw exception when getting supervisord service status #2681 @FroggyFlox 
+-Update Django REST Framework within Django version constraint #2695 @phillxnet
+-Update django-pipeline to latest #2689 @phillxnet
+-Update Python dependency to 3.9 #2691 @phillxnet
+-Provisional Django 2.2 LTS update #2625 @phillxnet
+-Add PyCharm rock-tests run config #2686 @phillxnet
+-Don't throw exception when getting supervisord service status #2681 @FroggyFlo
 * Fri Sep 15 2023 The Rockstor Project <support@rockstor.com> - 5.0.4-0
--Bump versions to a 5.0.4 base (Testing) - testing branch #2675 @phillxnet 
--Catch DBusException to not throw error on LDAP group lookup #2673 @FroggyFlox 
--Explicitly set REALM when querying workgroup #2671 @FroggyFlox 
--surface Distro Version to breadcrumb bar #2668 @Hooverdan96 
--Set `Meta.base_manager_name` on 'storageadmin.Disk' #2666 @FroggyFlox 
--Use user.is_authenticated as an attribute #2664 @FroggyFlox 
--Migrate to New Middleware style #2662 @FroggyFlox 
+-Bump versions to a 5.0.4 base (Testing) - testing branch #2675 @phillxnet
+-Catch DBusException to not throw error on LDAP group lookup #2673 @FroggyFlox
+-Explicitly set REALM when querying workgroup #2671 @FroggyFlox
+-surface Distro Version to breadcrumb bar #2668 @Hooverdan96
+-Set `Meta.base_manager_name` on 'storageadmin.Disk' #2666 @FroggyFlox
+-Use user.is_authenticated as an attribute #2664 @FroggyFlox
+-Migrate to New Middleware style #2662 @FroggyFlox
 * Sat Aug 19 2023 The Rockstor Project <support@rockstor.com> - 5.0.3-0
--Save and Restore config back-up files during rpm update #2660 @Hooverdan96 @phillxnet @FroggyFlox 
--(t) Update django-pipeline to 1.7.0 #2646 @FroggyFlox 
--Improve rockstor.service re robustness #2657 @phillxnet 
--Improve Web-UI update re systemd service management #2651 @phillxnet 
--Enhance development ease #2653 @phillxnet 
--Web-UI update fails to recreate venv #2652 @FroggyFlox @phillxnet 
--Establish on_delete for ForeignKey re Django update #2645 @phillxnet 
--Address compression cosmetics #2640 @StephenBrown2 
--Update .gitignore with Rockstor build artifacts #2644 @StephenBrown2 
+-Save and Restore config back-up files during rpm update #2660 @Hooverdan96 @phillxnet @FroggyFlox
+-(t) Update django-pipeline to 1.7.0 #2646 @FroggyFlox
+-Improve rockstor.service re robustness #2657 @phillxnet
+-Improve Web-UI update re systemd service management #2651 @phillxnet
+-Enhance development ease #2653 @phillxnet
+-Web-UI update fails to recreate venv #2652 @FroggyFlox @phillxnet
+-Establish on_delete for ForeignKey re Django update #2645 @phillxnet
+-Address compression cosmetics #2640 @StephenBrown2
+-Update .gitignore with Rockstor build artifacts #2644 @StephenBrown2
 * Wed Aug 02 2023 The Rockstor Project <support@rockstor.com> - 5.0.2-0
--resolve indeterminate or inappropriate postgresql alternative conf #2632 @phillxnet 
--Add option for ZSTD compression #2618 @StephenBrown2 
--Improve OS independence re unit tests #2633 @phillxnet 
--user admin enable without password change not internal error #2635 @phillxnet 
+-resolve indeterminate or inappropriate postgresql alternative conf #2632 @phillxnet
+-Add option for ZSTD compression #2618 @StephenBrown2
+-Improve OS independence re unit tests #2633 @phillxnet
+-user admin enable without password change not internal error #2635 @phillxnet
 * Mon Jul 24 2023 The Rockstor Project <support@rockstor.com> - 5.0.1-0
--venv not updating re python version change #2626 @phillxnet 
--(t) Failure to check for updates in locales other than en_US #2627 @phillxnet 
+-venv not updating re python version change #2626 @phillxnet
+-(t) Failure to check for updates in locales other than en_US #2627 @phillxnet
 * Fri Jul 21 2023 The Rockstor Project <support@rockstor.com> - 5.0.0-0
--WARNING -- RENEWED TESTING PHASE 5.0.0-0 -- (DEVELOPERS ONLY) #2610 @phillxnet 
--Update specifics of Python version in pyproject.toml etc #2620 @phillxnet 
--Update unit tests re recent SSL Cert update changes #2611 @phillxnet 
--update use of python distro module re 1.7.0+ changes #2426 @phillxnet 
--Disposition of pytz package #2590 @phillxnet 
--SSL Certificate update doesn't reload nginx #2606 @phillxnet 
--Testing counterpart Revise Stable Updates activation re legacy shop removal #2603 @phillxnet 
--Add GitHub Action to trigger post-release updates across repositories #2600  @FroggyFlox 
--Restore config backup functionality #2569 @FroggyFlox 
--Py3.6 Update certifi, urllib3, idna #2588 @phillxnet 
--Restore Logs Manager - Logs Readers functions #2568 @FroggyFlox 
--Py3.6 Scheduled tasks import paths fix, snapshot & scub #2570 @phillxnet 
--Py3.6 test_user.py fail re string interpretation #2582 @phillxnet 
--Save network usage processed data as List object #2577 @FroggyFlox 
--Py3.6 test_shares.py & test_snapshot.py re boolean type #2580 @phillxnet 
--Py3.6 ModuleNotFoundError: 'crontabwindow', 'nfsd_calls' - tests #2578 @phillxnet 
--Py3.6 ModuleNotFoundError: No module named 'mock' - tests #2575 @phillxnet 
--Py3.6 update test_btrfs.py and use built-in mock #2571 @phillxnet 
--Preliminary python 3.6 port - development #2564 @phillxnet 
+-WARNING -- RENEWED TESTING PHASE 5.0.0-0 -- (DEVELOPERS ONLY) #2610 @phillxnet
+-Update specifics of Python version in pyproject.toml etc #2620 @phillxnet
+-Update unit tests re recent SSL Cert update changes #2611 @phillxnet
+-update use of python distro module re 1.7.0+ changes #2426 @phillxnet
+-Disposition of pytz package #2590 @phillxnet
+-SSL Certificate update doesn't reload nginx #2606 @phillxnet
+-Testing counterpart Revise Stable Updates activation re legacy shop removal #2603 @phillxnet
+-Add GitHub Action to trigger post-release updates across repositories #2600  @FroggyFlox
+-Restore config backup functionality #2569 @FroggyFlox
+-Py3.6 Update certifi, urllib3, idna #2588 @phillxnet
+-Restore Logs Manager - Logs Readers functions #2568 @FroggyFlox
+-Py3.6 Scheduled tasks import paths fix, snapshot & scub #2570 @phillxnet
+-Py3.6 test_user.py fail re string interpretation #2582 @phillxnet
+-Save network usage processed data as List object #2577 @FroggyFlox
+-Py3.6 test_shares.py & test_snapshot.py re boolean type #2580 @phillxnet
+-Py3.6 ModuleNotFoundError: 'crontabwindow', 'nfsd_calls' - tests #2578 @phillxnet
+-Py3.6 ModuleNotFoundError: No module named 'mock' - tests #2575 @phillxnet
+-Py3.6 update test_btrfs.py and use built-in mock #2571 @phillxnet
+-Preliminary python 3.6 port - development #2564 @phillxnet
 * Tue May 30 2023 Philip Guyton <philip@yewtreeapps.com> - 4.6.0-0
 -Merge testing branch into master #2529 @phillxnet
 -Bump versions to a 4.6.0 base (RC7) #2561 @phillxnet
