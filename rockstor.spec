@@ -72,6 +72,7 @@ Requires: python311
 Requires: python311-devel
 Requires: python311-pipx
 Requires: python311-rpm
+Requires: python3-rpm
 Requires: NetworkManager
 Requires: nginx
 Requires: btrfsprogs
