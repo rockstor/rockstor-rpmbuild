@@ -515,7 +515,7 @@ exit 0
 %changelog
 * Sat May 09 2026 The Rockstor Project <support@rockstor.com> - 5.5.3-0
 -Bump version to a 5.5.3 base #3126 @phillxnet 
--PyPi rpm shim needs fallback python3-rpm on Leap 15.6 #3125 @FroggyFlox @Hooverdan96 @phillxnet in https://github.com/rockstor/rockstor-rpmbuild/pull/123
+-PyPi rpm shim needs fallback python3-rpm on Leap 15.6 #3125 @FroggyFlox @Hooverdan96 @phillxnet 
 -Drop support for NIS #2947 @phillxnet 
 -Py3.13 SyntaxWarning in intended raw test strings #2684 @phillxnet 
 * Fri May 01 2026 The Rockstor Project <support@rockstor.com> - 5.5.2-1
