@@ -429,10 +429,16 @@ fi
 # Enforce, via manual alternatives configuration, our target postgresql & pipx versions.
 # We do this on install & update to avoid base OS defaults exceeding our compatibility.
 # Compatibility concerns:
-# - Postgresql: Django 5.2's primary dependency on > 13, and secondary dependency of psycopg which we pin.
+# - Postgresql: Django 6.0's primary dependency on > 14, and secondary dependency of psycopg which we pin.
 # - Pipx: We install and manage Poetry via OS supplied python3.##-pipx packages.
-update-alternatives --set postgresql /usr/lib/postgresql17
-update-alternatives --set pipx /usr/bin/pipx-3.11
+update-alternatives --set postgresql /usr/lib/postgresql17 | true
+update-alternatives --set pipx /usr/bin/pipx-3.13 | true
+# Support incoming libalternatives - as-yet only available for pipx, and only on some OS targets.
+# See `alts -l pipx` for [-p <alt_priority>] values.
+alts -s -n pipx -p 1313 | true
+# TODO add postgres `alts` entry when available.
+#  We cannot be sure of the -n parameter, and cannot know the priority that will be used for e.g. postgresql17.
+
 # enable/disable our units by default on package installation,
 # enforcing distribution, spin or administrator preset policy.
 # See: https://build.opensuse.org/package/show/home:rockstor:branches:Base:System/systemd-presets-branding-rockstor
@@ -494,7 +500,7 @@ exit 0
 # "10 13" prepares Leap 15.3 4.1.0-0 installs, dup'ed to 15.4 4.6.1-0, for > 5.0.5-0.
 %{prefix}/%{name}/src/rockstor/scripts/db_upgrade.sh 10 13
 # The above is assumed to have been run in a previous update - upto Stable 5.1.0
-# Preparing for Stable 5.6.0-0 & Django 5.2 LTS and SSE potential. Leap 15.6 onwards.
+# Preparing for Stable 5.6.0-0 & Django 6.0 and SSE potential.
 %{prefix}/%{name}/src/rockstor/scripts/db_upgrade.sh 13 17
 #
 # Restore 'pre' scriptlet's config-backup-rpmsave files to static.
