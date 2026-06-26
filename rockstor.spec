@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.5.3
+Version: 5.5.4
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.5.3
+%define jslibs_version 5.5.4
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -519,6 +519,13 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Fri Jun 26 2026 The Rockstor Project <support@rockstor.com> - 5.5.4-0
+-Bump version to a 5.5.4 base #3143 @phillxnet 
+-Django 6.0 point release + routine updates #3141 @phillxnet 
+-gpg: Note: database_open ... waiting for lock #3117 @phillxnet 
+-Upgrade to Django 6.0 #3093 @phillxnet @FroggyFlox 
+-initrock.py fails at "--DB-- Running - migrate_default" #3128 @phillxnet 
+-Improve initrock DB Tune,Setup,Migrate logging #3129 @phillxnet 
 * Sat May 09 2026 The Rockstor Project <support@rockstor.com> - 5.5.3-0
 -Bump version to a 5.5.3 base #3126 @phillxnet
 -PyPi rpm shim needs fallback python3-rpm on Leap 15.6 #3125 @FroggyFlox @Hooverdan96 @phillxnet
