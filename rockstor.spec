@@ -1,10 +1,10 @@
 Name: rockstor
-Version: 5.5.4
+Version: 5.5.5
 Release: 0
 Summary: Btrfs Network Attached Storage (NAS) Appliance.
 Group: Productivity/Networking/File-Sharing
 
-%define jslibs_version 5.5.4
+%define jslibs_version 5.5.5
 # Enable source fetch - when default disabled, source dir is /usr/src/packages/SOURCES
 %undefine _disable_source_fetch
 
@@ -516,6 +516,14 @@ exit 0
 # https://en.opensuse.org/openSUSE:Creating_a_changes_file_(RPM)
 # https://github.com/openSUSE/obs-build/blob/master/changelog2spec
 %changelog
+* Mon Jul 06 2026 The Rockstor Project <support@rockstor.com> - 5.5.5-0
+-Bump version to a 5.5.5 base #3157 @phillxnet 
+-Replication: missing slash in snapshot path #3147 @Hooverdan96 @phillxnet 
+-Add .gitignore entry for poetry-python.txt #3135 @phillxnet 
+-Record `poetry env info` to poetry-install.txt #3134 @phillxnet 
+-Remove Shellinabox #3151 @phillxnet @FroggyFlox 
+-Update Huey task queue re Django tasks #3149 @phillxnet @FroggyFlox 
+-update pool mount options #3044 @Hooverdan96 
 * Fri Jun 26 2026 The Rockstor Project <support@rockstor.com> - 5.5.4-0
 -Bump version to a 5.5.4 base #3143 @phillxnet 
 -Django 6.0 point release + routine updates #3141 @phillxnet 
