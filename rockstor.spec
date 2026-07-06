@@ -107,7 +107,6 @@ Requires: docker
 Requires: cryptsetup
 Requires: python3-python-dateutil
 Requires: which
-Requires: shellinabox
 Requires: avahi
 Requires: cronie
 Requires: sssd
@@ -174,7 +173,6 @@ Requires: docker
 Requires: cryptsetup
 Requires: python3-python-dateutil
 Requires: which
-# Requires: shellinabox  # OBS issue re "Nothing provides check-create-certificate"
 Requires: avahi
 Requires: cronie
 Requires: sssd
@@ -243,7 +241,6 @@ Requires: docker
 Requires: cryptsetup
 Requires: python3-python-dateutil
 Requires: which
-Requires: shellinabox
 Requires: avahi
 Requires: cronie
 Requires: sssd
