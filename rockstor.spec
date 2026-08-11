@@ -127,6 +127,7 @@ Requires: sudo
 Requires: whois
 Requires: device-mapper
 Requires: lsb-release
+Requires: e2fsprogs
 %endif
 
 # openSUSE Leap 16.0
@@ -193,6 +194,7 @@ Requires: sudo
 Requires: whois
 Requires: device-mapper
 Requires: lsb-release
+Requires: e2fsprogs
 %endif
 
 # TUMBLEWEED/Slowroll
@@ -261,6 +263,7 @@ Requires: sudo
 Requires: whois
 Requires: device-mapper
 Requires: lsb-release
+Requires: e2fsprogs
 %endif
 
 # rpm build notes (from man rpmbuild):
