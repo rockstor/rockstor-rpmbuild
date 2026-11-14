@@ -80,7 +80,6 @@ Requires: nfs-kernel-server
 Requires: nfs-client
 Requires: samba
 Requires: samba-winbind
-Requires: ypbind
 Requires: rpcbind
 Requires: realmd
 Requires: realmd-lang
@@ -130,8 +129,8 @@ Requires: lsb-release
 Requires: e2fsprogs
 %endif
 
-# openSUSE Leap 16.0
-%if 0%{?suse_version} == 1600
+# openSUSE Leap 16.0/16.1
+%if 0%{?suse_version} == 1600 || 0%{?suse_version} == 1610
 BuildRequires: python313
 BuildRequires: python313-devel
 BuildRequires: python313-pipx
@@ -147,7 +146,6 @@ Requires: nfs-kernel-server
 Requires: nfs-client
 Requires: samba
 Requires: samba-winbind
-# Requires: ypbind  # No longer available.
 Requires: rpcbind
 Requires: realmd
 Requires: realmd-lang
@@ -198,9 +196,9 @@ Requires: e2fsprogs
 %endif
 
 # TUMBLEWEED/Slowroll
-# As of Oct 2025:
+# As of Nov 2026:
 # Version unreliable as changes over time !
-%if 0%{?suse_version} > 1600
+%if 0%{?suse_version} >= 1699
 BuildRequires: python313
 BuildRequires: python313-devel
 BuildRequires: python313-pipx
@@ -216,7 +214,6 @@ Requires: nfs-kernel-server
 Requires: nfs-client
 Requires: samba
 Requires: samba-winbind
-Requires: ypbind
 Requires: rpcbind
 Requires: realmd
 Requires: realmd-lang
